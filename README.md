@@ -1,70 +1,68 @@
-#  Sakai Admin Template for Vue  
- 
-### Live Preview
- 
-Visit [Sakai Vue](https://www.primefaces.org/sakai-vue) website for a live preview. 
- 
-### Getting Started
-Sakai is an application template for Vue based on the [Vue CLI](https://cli.vuejs.org/) that provides out-of-the-box standard
-tooling for Vue projects. To get started, clone this repository from GitHub and install the dependencies with npm or yarn.
-                
+<h1 align="center">Sistema Apo Digital</h1>
+
+
+
+##  Setup do Projeto
+
+<p>Antes de Usar, instale todas as dependencias do app com o comando:</p>
+
+Usando npm :
+
 ```
 npm install
 ```
 
-or
+Usando yarn :
 
 ```
-yarn
+yarn install
 ```
 
-Next step is running the application using the serve script and navigate to **http://localhost:8080/** to view the application.
-That is it, you may now start with the development of your application using the Sakai template.</p>
+### Compilando e usando o Hot-Reload para desenvolvimento
+
+<p>Execute este comando para compilar:</p>
+
+Usando npm :
 
 ```
 npm run serve
 ```
 
-### Vue CLI Scripts
-Following commands are derived from create-app-app.
+Usando yarn :
+
 ```
-"npm run serve": Starts the development server
-"npm run build": Builds the application for deployment.
-"npm run lint": Executes the lint checks.
-"npm run test:unit": Runs the tests.
+yarn serve
 ```
 
-### Structure
-Sakai consists of 2 main parts; the application layout and the resources. **App.vue** inside src folder is the main component containing the template for the base layout whereas required resources such as SASS structure for the layout are placed inside the **src/assets/** folder.</p>
+###  Compilando e minificando para Produção for production
 
-### Layout Components
-Main layout is the template of the **App.vue**, it is divided into a couple of child components such as topbar, menu and footer. Here is template of the
-**App.vue** component that implements the logic such as menu state, layout modes and so on.
+<p>Build o app para produção com os seguinte comando :</p>
 
-### Menu
-Menu is a separate component defined in **AppMenu.vue** file based on PrimeVue MenuModel API. In order to define the menuitems,
-navigate to data section of **App.vue** file and define your own model as a nested structure using the **menu** property.
+Usando npm :
 
-### Dependencies
-Dependencies of Sakai are listed below and needs to be added to package.json.
-
-```json
-{
-    "primevue": "~3.12.2",
-    "primeicons": "~5.0.0",
-    "primeflex": "~3.1.2",
-}
+```
+npm run build
 ```
 
-### PrimeVue Theme
-Sakai uses the free Saga, Arya and Vela themes which are distributed within PrimeVue, however it can be used with any PrimeVue theme as well such as material, tailwind and bootstrap as layout colors are derived from the theme used via CSS variables.
+Usando yarn :
 
-### SASS Variables
-In case you'd like to customize the layout variables, open **_variables.scss** file under src/layout folder. The list is pretty short as majority of the variables are derived from the PrimeVue theme being used.
-
-**src/assets/_variables.scss**
-```css
-$fontSize:1rem;
-$borderRadius:12px;
-$transitionDuration:.2s;
 ```
+yarn build
+```
+
+# Padrão de Comentarios
+Para manter uma maior padronização os commits devem ser realizados seguindo o seguinte padrão `“<Tipo>[Escopo opcional]: <Descrição>”`. Os tipos utilizados serão os mencionados abaixo:
+
+- **FIX**: Resolução de bugs
+- **FEAT**: Inicio de implementação de uma funcionalidade
+- **CHORE**: Trabalho em progresso de uma funcionalidade
+- **REFACTOR**: Ajuste sem mudar Logica - Refatoração
+- **TEST**: Implementa testes Automatizados
+- **STYLE**: Mudanças de formatação do código - Lint
+- **PERF**: Ajustes de Performance
+- **DOCS**: Mudanças / Ajustes na documentação
+- **CI**: Ajuste nas configurações do CI
+- **BUILD**: Ajustes nas configurações de Build
+
+
+
