@@ -8,10 +8,16 @@ const routes = [
         component: App,
         children: [
             {
-                path: '',
+                path: '/',
+                name: 'home',
+                component: () => import('./views/evaluation.vue')
+            },
+            {
+                path: '/dashborad',
                 name: 'dashboard',
                 component: () => import('./components/Dashboard.vue')
             },
+            
             {
                 path: '/formlayout',
                 name: 'formlayout',
