@@ -10,7 +10,13 @@ const routes = [
             {
                 path: '/',
                 name: 'home',
-                component: () => import('./views/evaluation.vue')
+                component: () => import('./views/evaluation.vue'),
+                
+            },
+            {
+                path:"/CRUD",
+                name:"CRUD",
+                component:() => import('./views/CRUDevaluation.vue')
             },
             {
                 path: '/dashborad',
@@ -116,8 +122,8 @@ const routes = [
                 component: () => import('./components/MiscDemo.vue')
             },
             {
-                path: '/crud',
-                name: 'crud',
+                path: '/crudDemo',
+                name: 'crudDemo',
                 component: () => import('./pages/CrudDemo.vue')
             },
             {
@@ -147,6 +153,7 @@ const routes = [
             }
         ]
     },
+
     {
         path: '/login',
         name: 'login',

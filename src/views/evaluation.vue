@@ -5,7 +5,7 @@
         <Toast />
 
 
-        <DataTable ref="dt" :value="products" v-model:selection="selectedProducts" dataKey="id" :paginator="true"
+        <DataTable ref="dt" :value="dataTable" v-model:selection="selectedProducts" dataKey="id" :paginator="true"
           :rows="10" :filters="filters"
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           :rowsPerPageOptions="[5,10,25]"
@@ -20,13 +20,13 @@
           <Column headerStyle="min-width:10rem;">
             <template #body="slotProps">
               <Button icon="pi pi-search" class="p-button-rounded p-button-info mr-2"
-                @click="dialogMessage('visualização',null)" />
+                @click="dialogMessage('visualização',slotProps.data.id,1)" />
               <Button icon="pi pi-reply" class="p-button-rounded p-button-primary mr-2"
-                @click="dialogMessage('Responder',null)" />
+                @click="dialogMessage('visualização',slotProps.data.id,1)" />
               <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
-                @click="dialogMessage('Editar',null)" />
+                @click="dialogMessage('visualização',slotProps.data.id,1)" />
               <Button icon="pi pi-trash" class="p-button-rounded p-button-danger mt-2"
-                @click="dialogMessage('Apagar',slotProps.data.name)" />
+                @click="dialogMessage('visualização',slotProps.data.id,0)" />
             </template>
           </Column>
         </DataTable>
@@ -145,6 +145,10 @@ export default {
       selectedProducts: null,
       filters: {},
       submitted: false,
+      dataTable: [
+        { name: "Avaliação de teste 1", id: 1 },
+        { name: "Avaliação de teste 2", id: 2 },
+        { name: "Avaliação de teste 3", id: 3 }],
       statuses: [
         { label: 'INSTOCK', value: 'instock' },
         { label: 'LOWSTOCK', value: 'lowstock' },
@@ -161,11 +165,11 @@ export default {
     this.productService.getProducts().then(data => this.products = data);
   },
   methods: {
-    dialogMessage(text, product) {
-      if (product != null) {
-        console.log(text + product.name);
+    dialogMessage(text, id, buttonID) {
+      if (buttonID == 1) {
+        this.$router.push('/CRUD');
       }
-      this.$toast.add({ severity: 'info', summary: `Voce clicou no botão de ${text}`, detail: 'Teste Ok', life: 3000 });
+      this.$toast.add({ severity: 'info', summary: `Voce clicou no botão de ${text} ID: ${id}`, detail: 'Teste Ok', life: 3000 });
 
     },
 

@@ -79,7 +79,7 @@ export default {
                 {
                     label: 'Pages', icon: 'pi pi-fw pi-clone',
                     items: [
-                        { label: 'Crud', icon: 'pi pi-fw pi-user-edit', to: '/crud' },
+                        { label: 'Crud', icon: 'pi pi-fw pi-user-edit', to: '/crudDemo' },
                         { label: 'Timeline', icon: 'pi pi-fw pi-calendar', to: '/timeline' },
                         { label: 'Landing', icon: 'pi pi-fw pi-globe', to: '/landing' },
                         { label: 'Login', icon: 'pi pi-fw pi-sign-in', to: '/login' },

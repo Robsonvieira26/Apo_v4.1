@@ -94,6 +94,8 @@ import TreeSelect from 'primevue/treeselect';
 import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 
+import CascadeSelect from 'primevue/cascadeselect';
+
 import CodeHighlight from './AppCodeHighlight';
 import BlockViewer from './BlockViewer';
 
@@ -195,6 +197,7 @@ app.component('Tree', Tree);
 app.component('TreeSelect', TreeSelect);
 app.component('TreeTable', TreeTable);
 app.component('TriStateCheckbox', TriStateCheckbox);
+app.component('CascadeSelect', CascadeSelect);
 
 app.component('BlockViewer', BlockViewer);
 
