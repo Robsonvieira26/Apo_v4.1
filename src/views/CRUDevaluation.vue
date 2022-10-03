@@ -8,6 +8,14 @@
       />
     </div>
   </div>
+  <div class="card">
+    <div v-if="perguntaFake != null">
+      <div v-if="perguntaFake[0].type == 'Multiplecheckbox'">
+        <QuestionTittle :questionTittle="perguntaFake[0].tittle" />
+      </div>
+    </div>
+  </div>
+
   <Dialog
     v-model:visible="createEditVisible"
     header="Criar/Editar Pergunta"
@@ -262,10 +270,32 @@
   </Dialog>
 </template>
 <script>
+import QuestionTittle from "@/components/crud-components/QuestionTittle.vue";
+
 export default {
   name: "CRUDevaluation",
+  components: {
+    QuestionTittle,
+  },
   data() {
     return {
+      //Dados pergunta fake
+      perguntaFake: [
+        {
+          tittle: "Titulo Exemplo",
+          type: "Multiplecheckbox",
+          requiered: this.requieredQuestion,
+          values: [
+            { name: "opcao teste" },
+            { name: "opcao teste" },
+            { name: "opcao teste" },
+            { name: "opcao teste" },
+            { name: "opcao teste" },
+          ],
+        },
+      ],
+      //Dados pergunta fake
+
       createEditVisible: false,
       selectedQuestionOption: null,
       requieredQuestion: false,
