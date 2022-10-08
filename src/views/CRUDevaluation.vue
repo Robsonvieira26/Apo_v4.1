@@ -12,6 +12,7 @@
     <div v-if="perguntaFake != null">
       <div v-if="perguntaFake[0].type == 'Multiplecheckbox'">
         <QuestionTittle :questionTittle="perguntaFake[0].tittle" />
+        <QuestionChoice :question="perguntaFake" />
       </div>
     </div>
   </div>
@@ -39,103 +40,73 @@
     </div>
     <div v-if="selectedQuestionOption != null">
       <div v-if="selectedQuestionOption.name == 'Multipla Escolha'">
-        <div class="field">
-          <InputText
-            type="text"
-            placeholder="Titulo da pergunta"
-            v-model="questionTittle"
-          ></InputText>
+        <div class="formgrid grid px-2">
+          <div class="field col-8">
+            <InputText
+              type="text"
+              placeholder="Titulo da pergunta"
+              v-model="questionTittle"
+            ></InputText>
+          </div>
+          <div class="field col-4">
+            <InputNumber
+              inputId="horizontal"
+              v-model="numQuestionsMultiple"
+              showButtons
+              buttonLayout="horizontal"
+              :step="1"
+              :min="2"
+              :max="15"
+              decrementButtonClass="p-button-danger"
+              incrementButtonClass="p-button-success"
+              incrementButtonIcon="pi pi-plus"
+              decrementButtonIcon="pi pi-minus"
+            />
+          </div>
         </div>
         <div class="formgrid grid px-2">
-          <div class="field col-6">
-            <label for="labelsMultiple[0]">Alternativa 1</label>
+          <div v-for="i in numQuestionsMultiple" :key="i" class="field col-6">
+            <label for="labelsMultiple[i]">Alternativa {{ i }}</label>
             <InputText
-              id="labelsMultiple[0]"
+              id="labelsMultiple[i]"
               type="text"
-              v-model="labelsMultiple[0]"
-            />
-          </div>
-          <div class="field col-6">
-            <label for="labelsMultiple[1]">Alternativa 2</label>
-            <InputText
-              id="labelsMultiple[1]"
-              type="text"
-              v-model="labelsMultiple[1]"
-            />
-          </div>
-          <div class="field col-4">
-            <label for="labelsMultiple[2]">Alternativa 3</label>
-            <InputText
-              id="labelsMultiple[2]"
-              type="text"
-              v-model="labelsMultiple[2]"
-            />
-          </div>
-          <div class="field col-4">
-            <label for="labelsMultiple[3]">Alternativa 4</label>
-            <InputText
-              id="labelsMultiple[3]"
-              type="text"
-              v-model="labelsMultiple[3]"
-            />
-          </div>
-          <div class="field col-4">
-            <label for="labelsMultiple[4]">Alternativa 5</label>
-            <InputText
-              id="labelsMultiple[4]"
-              type="text"
-              v-model="labelsMultiple[4]"
+              v-model="labelsMultiple[i]"
             />
           </div>
         </div>
       </div>
       <div v-if="selectedQuestionOption.name == 'Escolha Unica'">
-        <div class="field">
-          <InputText
-            type="text"
-            placeholder="Titulo da pergunta"
-            v-model="questionTittle"
-          ></InputText>
+        <div class="formgrid grid px-2">
+          <div class="field col-8">
+            <InputText
+              type="text"
+              placeholder="Titulo da pergunta"
+              v-model="questionTittle"
+            ></InputText>
+          </div>
+          <div class="field col-4">
+            <InputNumber
+              inputId="horizontal"
+              v-model="numQuestionsUnique"
+              showButtons
+              buttonLayout="horizontal"
+              :step="1"
+              :min="2"
+              :max="15"
+              decrementButtonClass="p-button-danger"
+              incrementButtonClass="p-button-success"
+              incrementButtonIcon="pi pi-plus"
+              decrementButtonIcon="pi pi-minus"
+            />
+          </div>
         </div>
         <div class="formgrid grid px-2">
-          <div class="field col-6">
-            <label for="labelsMultiple[0]">Alternativa 1</label>
+          <div v-for="i in numQuestionsUnique" :key="i" class="field col-6">
+            <label for="labelsUnique[i]">Alternativa {{ i }}</label>
             <InputText
-              id="labelsMultiple[0]"
+              id="labelsUnique[i]"
               type="text"
-              v-model="labelsUnique[0]"
-            />
-          </div>
-          <div class="field col-6">
-            <label for="labelsUnique[1]">Alternativa 2</label>
-            <InputText
-              id="labelsUnique[1]"
-              type="text"
-              v-model="labelsUnique[1]"
-            />
-          </div>
-          <div class="field col-4">
-            <label for="labelsUnique[2]">Alternativa 3</label>
-            <InputText
-              id="labelsUnique[2]"
-              type="text"
-              v-model="labelsUnique[2]"
-            />
-          </div>
-          <div class="field col-4">
-            <label for="labelsUnique[3]">Alternativa 4</label>
-            <InputText
-              id="labelsUnique[3]"
-              type="text"
-              v-model="labelsUnique[3]"
-            />
-          </div>
-          <div class="field col-4">
-            <label for="labelsUnique[4]">Alternativa 5</label>
-            <InputText
-              id="labelsUnique[4]"
-              type="text"
-              v-model="labelsUnique[4]"
+              v-model="labelsUnique[i]"
             />
           </div>
         </div>
@@ -211,44 +182,12 @@
           ></InputText>
         </div>
         <div class="formgrid grid px-2">
-          <div class="field col-6">
-            <label for="labelsLikert[0]">Alternativa 1</label>
+          <div v-for="i in 5" :key="i" class="field col-6">
+            <label for="labelsLikert[0]">Alternativa {{ i }}</label>
             <InputText
               id="labelsLikert[0]"
               type="text"
               v-model="labelsLikert[0]"
-            />
-          </div>
-          <div class="field col-6">
-            <label for="labelsLikert[1]">Alternativa 2</label>
-            <InputText
-              id="labelsLikert[1]"
-              type="text"
-              v-model="labelsLikert[1]"
-            />
-          </div>
-          <div class="field col-4">
-            <label for="labelsLikert[2]">Alternativa 3</label>
-            <InputText
-              id="labelsLikert[2]"
-              type="text"
-              v-model="labelsLikert[2]"
-            />
-          </div>
-          <div class="field col-4">
-            <label for="labelsLikert[3]">Alternativa 4</label>
-            <InputText
-              id="labelsLikert[3]"
-              type="text"
-              v-model="labelsLikert[3]"
-            />
-          </div>
-          <div class="field col-4">
-            <label for="labelsLikert[4]">Alternativa 5</label>
-            <InputText
-              id="labelsLikert[4]"
-              type="text"
-              v-model="labelsLikert[4]"
             />
           </div>
         </div>
@@ -271,11 +210,13 @@
 </template>
 <script>
 import QuestionTittle from "@/components/crud-components/QuestionTittle.vue";
+import QuestionChoice from "@/components/crud-components/QuestionChoice.vue";
 
 export default {
   name: "CRUDevaluation",
   components: {
     QuestionTittle,
+    QuestionChoice,
   },
   data() {
     return {
@@ -297,6 +238,8 @@ export default {
       //Dados pergunta fake
 
       createEditVisible: false,
+      numQuestionsMultiple: 2,
+      numQuestionsUnique: 2,
       selectedQuestionOption: null,
       requieredQuestion: false,
       labelsLikert: [],
@@ -366,12 +309,13 @@ export default {
             values: [
               { name: this.labelsMultiple[0] },
               { name: this.labelsMultiple[1] },
-              { name: this.labelsMultiple[2] },
-              { name: this.labelsMultiple[3] },
-              { name: this.labelsMultiple[4] },
             ],
           },
         ];
+        for (let i = 2; i < this.labelsMultiple.length; i++) {
+          this.options[0].values.push({ name: this.labelsMultiple[i] });
+        }
+        //  console.log(this.options);
       } else if (this.selectedQuestionOption.value == 1) {
         this.options = [
           {
@@ -467,9 +411,10 @@ export default {
       // console.log(this.options[0]);
       console.log("Pergunta do tipo:" + this.options[0].type);
       console.log("Resposta do tipo:");
-      this.options[0].values.forEach((element) => {
-        console.log(element.name);
-      });
+      // this.options[0].values.forEach((element) => {
+      //   console.log(element.name);
+      // });
+      console.log(this.options[0].values);
       console.log("Requerido: " + this.options[0].requiered);
       this.clearInputs();
       this.hideDialog();
