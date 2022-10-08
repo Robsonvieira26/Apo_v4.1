@@ -24,188 +24,190 @@
     :modal="true"
     class="p-fluid"
   >
-    <div class="field col-8">
-      <label for="multiselect">Selecione o Tipo de Pergunta</label>
-      <span class="p-float-label">
-        <CascadeSelect
-          id="cascadeSelect"
-          v-model="selectedQuestionOption"
-          :options="cascadeOptions"
-          optionLabel="name"
-          optionGroupLabel="name"
-          :optionGroupChildren="['types']"
-          tyle="minWidth: 14rem"
-        />
-      </span>
-    </div>
-    <div v-if="selectedQuestionOption != null">
-      <div v-if="selectedQuestionOption.name == 'Multipla Escolha'">
-        <div class="formgrid grid px-2">
-          <div class="field col-8">
+    <ScrollPanel style="width: 100%; height: 250px" class="custombar1">
+      <div class="field col-8">
+        <label for="multiselect">Selecione o Tipo de Pergunta</label>
+        <span class="p-float-label">
+          <CascadeSelect
+            id="cascadeSelect"
+            v-model="selectedQuestionOption"
+            :options="cascadeOptions"
+            optionLabel="name"
+            optionGroupLabel="name"
+            :optionGroupChildren="['types']"
+            tyle="minWidth: 14rem"
+          />
+        </span>
+      </div>
+      <div v-if="selectedQuestionOption != null">
+        <div v-if="selectedQuestionOption.name == 'Multipla Escolha'">
+          <div class="formgrid grid px-2">
+            <div class="field col-8">
+              <InputText
+                type="text"
+                placeholder="Titulo da pergunta"
+                v-model="questionTittle"
+              ></InputText>
+            </div>
+            <div class="field col-4">
+              <InputNumber
+                inputId="horizontal"
+                v-model="numQuestionsMultiple"
+                showButtons
+                buttonLayout="horizontal"
+                :step="1"
+                :min="2"
+                :max="15"
+                decrementButtonClass="p-button-danger"
+                incrementButtonClass="p-button-success"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+              />
+            </div>
+          </div>
+          <div class="formgrid grid px-2">
+            <div v-for="i in numQuestionsMultiple" :key="i" class="field col-6">
+              <label for="labelsMultiple[i]">Alternativa {{ i }}</label>
+              <InputText
+                id="labelsMultiple[i]"
+                type="text"
+                v-model="labelsMultiple[i]"
+              />
+            </div>
+          </div>
+        </div>
+        <div v-if="selectedQuestionOption.name == 'Escolha Unica'">
+          <div class="formgrid grid px-2">
+            <div class="field col-8">
+              <InputText
+                type="text"
+                placeholder="Titulo da pergunta"
+                v-model="questionTittle"
+              ></InputText>
+            </div>
+            <div class="field col-4">
+              <InputNumber
+                inputId="horizontal"
+                v-model="numQuestionsUnique"
+                showButtons
+                buttonLayout="horizontal"
+                :step="1"
+                :min="2"
+                :max="15"
+                decrementButtonClass="p-button-danger"
+                incrementButtonClass="p-button-success"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+              />
+            </div>
+          </div>
+          <div class="formgrid grid px-2">
+            <div v-for="i in numQuestionsUnique" :key="i" class="field col-6">
+              <label for="labelsUnique[i]">Alternativa {{ i }}</label>
+              <InputText
+                id="labelsUnique[i]"
+                type="text"
+                v-model="labelsUnique[i]"
+              />
+            </div>
+          </div>
+        </div>
+        <div v-if="selectedQuestionOption.name == 'Texto Livre'">
+          <div class="field">
             <InputText
               type="text"
               placeholder="Titulo da pergunta"
               v-model="questionTittle"
             ></InputText>
           </div>
-          <div class="field col-4">
-            <InputNumber
-              inputId="horizontal"
-              v-model="numQuestionsMultiple"
-              showButtons
-              buttonLayout="horizontal"
-              :step="1"
-              :min="2"
-              :max="15"
-              decrementButtonClass="p-button-danger"
-              incrementButtonClass="p-button-success"
-              incrementButtonIcon="pi pi-plus"
-              decrementButtonIcon="pi pi-minus"
-            />
-          </div>
         </div>
-        <div class="formgrid grid px-2">
-          <div v-for="i in numQuestionsMultiple" :key="i" class="field col-6">
-            <label for="labelsMultiple[i]">Alternativa {{ i }}</label>
-            <InputText
-              id="labelsMultiple[i]"
-              type="text"
-              v-model="labelsMultiple[i]"
-            />
-          </div>
-        </div>
-      </div>
-      <div v-if="selectedQuestionOption.name == 'Escolha Unica'">
-        <div class="formgrid grid px-2">
-          <div class="field col-8">
+        <!-- Escala Likert -->
+        <div v-if="selectedQuestionOption.name == '1-5'">
+          <!-- Escala Likert: 1-5 -->
+          <div class="field">
             <InputText
               type="text"
               placeholder="Titulo da pergunta"
               v-model="questionTittle"
             ></InputText>
           </div>
-          <div class="field col-4">
-            <InputNumber
-              inputId="horizontal"
-              v-model="numQuestionsUnique"
-              showButtons
-              buttonLayout="horizontal"
-              :step="1"
-              :min="2"
-              :max="15"
-              decrementButtonClass="p-button-danger"
-              incrementButtonClass="p-button-success"
-              incrementButtonIcon="pi pi-plus"
-              decrementButtonIcon="pi pi-minus"
-            />
-          </div>
-        </div>
-        <div class="formgrid grid px-2">
-          <div v-for="i in numQuestionsUnique" :key="i" class="field col-6">
-            <label for="labelsUnique[i]">Alternativa {{ i }}</label>
-            <InputText
-              id="labelsUnique[i]"
-              type="text"
-              v-model="labelsUnique[i]"
-            />
-          </div>
-        </div>
-      </div>
-      <div v-if="selectedQuestionOption.name == 'Texto Livre'">
-        <div class="field">
-          <InputText
-            type="text"
-            placeholder="Titulo da pergunta"
-            v-model="questionTittle"
-          ></InputText>
-        </div>
-      </div>
-      <!-- Escala Likert -->
-      <div v-if="selectedQuestionOption.name == '1-5'">
-        <!-- Escala Likert: 1-5 -->
-        <div class="field">
-          <InputText
-            type="text"
-            placeholder="Titulo da pergunta"
-            v-model="questionTittle"
-          ></InputText>
-        </div>
-        <SelectButton
-          v-model="selectLikertChoice"
-          :options="selectLikert1Options"
-          optionLabel="name"
-          :disabled="true"
-        />
-      </div>
-      <div v-if="selectedQuestionOption.name == 'Pessimo - Otimo'">
-        <!-- Escala Likert: Pessimo - Otimo -->
-        <div class="field">
-          <InputText
-            type="text"
-            placeholder="Titulo da pergunta"
-            v-model="questionTittle"
-          ></InputText>
-        </div>
-
-        <SelectButton
-          v-model="selectLikertChoice"
-          :options="selectLikert2Options"
-          optionLabel="name"
-          :disabled="true"
-        />
-      </div>
-      <div
-        v-if="selectedQuestionOption.name == 'Muito Escuros - Bem Iluminados'"
-      >
-        <!-- Escala Likert: Pouco Iluminado - Muito Iluminado -->
-        <div class="field">
-          <InputText
-            type="text"
-            placeholder="Titulo da pergunta"
-            v-model="questionTittle"
-          ></InputText>
-        </div>
-        <SelectButton
-          v-model="selectLikertChoice"
-          :options="selectLikert3Options"
-          optionLabel="name"
-          :disabled="true"
-        />
-      </div>
-      <div v-if="selectedQuestionOption.name == 'Personalizar...'">
-        <!-- Personalizar Escala Likert -->
-        <div class="field">
-          <InputText
-            type="text"
-            placeholder="Titulo da pergunta"
-            v-model="questionTittle"
-          ></InputText>
-        </div>
-        <div class="formgrid grid px-2">
-          <div v-for="i in 5" :key="i" class="field col-6">
-            <label for="labelsLikert[0]">Alternativa {{ i }}</label>
-            <InputText
-              id="labelsLikert[0]"
-              type="text"
-              v-model="labelsLikert[0]"
-            />
-          </div>
-        </div>
-      </div>
-      <!-- Escala Likert -->
-      <div class="p-2">
-        <h5>Questão Obrigatoria?</h5>
-        <InputSwitch inputId="switch1" v-model="requieredQuestion" />
-        <br />
-        <div class="pt-2 px-2">
-          <Button
-            label="Salvar pergunta?"
-            class="p-button-raised p-button-rounded"
-            @click="saveQuestion()"
+          <SelectButton
+            v-model="selectLikertChoice"
+            :options="selectLikert1Options"
+            optionLabel="name"
+            :disabled="true"
           />
         </div>
+        <div v-if="selectedQuestionOption.name == 'Pessimo - Otimo'">
+          <!-- Escala Likert: Pessimo - Otimo -->
+          <div class="field">
+            <InputText
+              type="text"
+              placeholder="Titulo da pergunta"
+              v-model="questionTittle"
+            ></InputText>
+          </div>
+
+          <SelectButton
+            v-model="selectLikertChoice"
+            :options="selectLikert2Options"
+            optionLabel="name"
+            :disabled="true"
+          />
+        </div>
+        <div
+          v-if="selectedQuestionOption.name == 'Muito Escuros - Bem Iluminados'"
+        >
+          <!-- Escala Likert: Pouco Iluminado - Muito Iluminado -->
+          <div class="field">
+            <InputText
+              type="text"
+              placeholder="Titulo da pergunta"
+              v-model="questionTittle"
+            ></InputText>
+          </div>
+          <SelectButton
+            v-model="selectLikertChoice"
+            :options="selectLikert3Options"
+            optionLabel="name"
+            :disabled="true"
+          />
+        </div>
+        <div v-if="selectedQuestionOption.name == 'Personalizar...'">
+          <!-- Personalizar Escala Likert -->
+          <div class="field">
+            <InputText
+              type="text"
+              placeholder="Titulo da pergunta"
+              v-model="questionTittle"
+            ></InputText>
+          </div>
+          <div class="formgrid grid px-2">
+            <div v-for="i in 5" :key="i" class="field col-6">
+              <label for="labelsLikert[0]">Alternativa {{ i }}</label>
+              <InputText
+                id="labelsLikert[0]"
+                type="text"
+                v-model="labelsLikert[0]"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- Escala Likert -->
+        <div class="p-2">
+          <h5>Questão Obrigatoria?</h5>
+          <InputSwitch inputId="switch1" v-model="requieredQuestion" />
+          <br />
+          <div class="pt-2 px-2">
+            <Button
+              label="Salvar pergunta?"
+              class="p-button-raised p-button-rounded"
+              @click="saveQuestion()"
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </ScrollPanel>
   </Dialog>
 </template>
 <script>
@@ -433,3 +435,42 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+::v-deep(.p-scrollpanel) {
+  p {
+    padding: 0.5rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  &.custombar1 {
+    .p-scrollpanel-wrapper {
+      border-right: 9px solid var(--surface-ground);
+    }
+
+    .p-scrollpanel-bar {
+      background-color: var(--primary-color);
+      opacity: 1;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: #007ad9;
+      }
+    }
+  }
+
+  &.custombar2 {
+    .p-scrollpanel-wrapper {
+      border-right: 9px solid var(--surface-border);
+      border-bottom: 9px solid var(--surface-border);
+    }
+
+    .p-scrollpanel-bar {
+      background-color: var(--surface-ground);
+      border-radius: 0;
+      opacity: 1;
+      transition: background-color 0.2s;
+    }
+  }
+}
+</style>
