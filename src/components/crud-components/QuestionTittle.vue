@@ -1,5 +1,5 @@
 <template>
-  <label :for="questionLabel"
+  <label :for="questionTittle"
     ><b
       ><h4>{{ questionTittle }}</h4></b
     ></label
@@ -13,10 +13,7 @@ export default {
       type: String,
       required: true,
     },
-    questionLabel: {
-      type: String,
-      required: true,
-    },
+  
   },
 };
 </script>
