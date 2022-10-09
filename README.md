@@ -51,14 +51,14 @@ yarn build
 ```
 
 # Padrão de Comentarios
-Para manter uma maior padronização os commits devem ser realizados seguindo o seguinte padrão `“<Tipo>[Escopo opcional]: <Descrição>”`. Os tipos utilizados serão os mencionados abaixo:
+Para manter uma maior padronização os commits devem ser realizados seguindo o seguinte padrão `“TIPO:<Pagina(s) editadas>: Descrição”`. Os tipos utilizados serão os mencionados abaixo:
 
 - **FIX**: Resolução de bugs
 - **FEAT**: Inicio de implementação de uma funcionalidade
 - **CHORE**: Trabalho em progresso de uma funcionalidade
 - **REFACTOR**: Ajuste sem mudar Logica - Refatoração
 - **TEST**: Implementa testes Automatizados
-- **STYLE**: Mudanças de formatação do código - Lint
+- **STYLE**: Mudança no css
 - **PERF**: Ajustes de Performance
 - **DOCS**: Mudanças / Ajustes na documentação
 - **CI**: Ajuste nas configurações do CI
