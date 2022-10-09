@@ -1,26 +1,23 @@
 <template>
   <div>
-    <!-- {{ question }} -->
-    <!-- {{ question[0].values }} -->
     <div v-if="qType == 'Multiplecheckbox'">
-      <div class="p-3">
-        <div
-          class="py-2"
-          v-for="(valueQuestion, index) in qValues"
-          :key="index"
-        >
-          <div class="field-checkbox mb-0">
-            <Checkbox name="choices" :value="index" v-model="choices" />
-            <label :for="qType">{{ valueQuestion.name }}</label>
-          </div>
-        </div>
-      </div>
+      <Multiplecheckbox :values="qValues" :type="qType" />
+    </div>
+    <div v-if="qType == 'Uniquecheckbox'">
+      <Uniquecheckbox :values="qValues" :type="qType" />
     </div>
   </div>
 </template>
 <script>
+import Multiplecheckbox from "@/components/crud-components/question-types/Multiplecheckbox.vue";
+import Uniquecheckbox from "@/components/crud-components/question-types/Uniquecheckbox.vue";
+
 export default {
   name: "QuestionChoice",
+  components: {
+    Multiplecheckbox,
+    Uniquecheckbox,
+  },
   data() {
     return {
       choices: [],
@@ -35,10 +32,6 @@ export default {
       type: Array,
       required: true,
     },
-    // question: {
-    //   type: Object,
-    //   required: true,
-    // },
   },
 };
 </script>
