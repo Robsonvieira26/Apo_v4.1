@@ -23,19 +23,29 @@
     </div>
   </div>
   <div class="card">
-    <TabView :activeIndex="activeIndex">
-      <TabPanel header="Categoria 1" scrollable>
-        <div class="card">
-          <div v-if="perguntaFake != null">
-            <div v-if="perguntaFake[0].type == 'Multiplecheckbox'">
-              <QuestionTittle :questionTittle="perguntaFake[0].tittle" />
-              <QuestionChoice :question="perguntaFake" />
+    <TabView
+      ><!--:activeIndex="activeIndex"-->
+      <TabPanel header="Categoria 1">
+        <!-- <div class="card"> -->
+          <div v-if="questions == null">
+            <!-- TODO:CASO SEJA NULo SKELETON -->
+          </div>
+
+          <div v-if="questions != null">
+            <div v-for="question in questions" :key="question">
+              <QuestionCard
+                :qTittle="question.tittle"
+                :qType="question.type"
+                :qValues="question.values"
+              />
             </div>
-          </div></div
-      ></TabPanel>
-      <TabPanel v-for="i in 5" :key="i" :header="titulo(i)">
-        Categoria {{ i + 1 }}
+            <!-- {{ questions[0].tittle }} -->
+          </div>
+        <!-- </div> -->
       </TabPanel>
+      <!-- <TabPanel v-for="i in 5" :key="i" :header="titulo(i)">
+        Categoria {{ i + 1 }}
+      </TabPanel> -->
     </TabView>
   </div>
 
@@ -233,17 +243,19 @@
   </Dialog>
 </template>
 <script>
-import QuestionTittle from "@/components/crud-components/QuestionTittle.vue";
-import QuestionChoice from "@/components/crud-components/QuestionChoice.vue";
+import QuestionCard from "@/components/crud-components/QuestionCard.vue";
+
+import EvaluationService from "../service/EvaluationService";
 
 export default {
   name: "CRUDevaluation",
   components: {
-    QuestionTittle,
-    QuestionChoice,
+    QuestionCard,
   },
   data() {
     return {
+      evaluationService: null,
+      questions: null,
       //Dados pergunta fake
       perguntaFake: [
         {
@@ -313,7 +325,24 @@ export default {
       ],
     };
   },
+  created() {
+    this.evaluationService = new EvaluationService();
+  },
+  mounted() {
+    this.evaluationService
+      .getQuestions()
+      .then((data) => (this.questions = data));
+    if (this.questions == null) {
+      console.log("Nulo");
+    } else {
+      console.log(this.questions);
+      // console.log(this.questions.length);
+    }
+  },
   methods: {
+    addCategory() {
+      console.log(this.questions[0]);
+    },
     hideDialog() {
       this.createEditVisible = false;
       this.clearInputs();

@@ -1,0 +1,30 @@
+{
+	"data": [
+	{
+		"id": "0001",
+    "tittle": "Titulo Exemplo",
+    "type": "Multiplecheckbox",
+    "requiered": true,
+    "values": [
+      { "name": "opcao teste" },
+      { "name": "opcao teste" },
+      { "name": "opcao teste" },
+      { "name": "opcao teste" },
+      { "name": "opcao teste" }
+    ]
+  },
+  {
+		"id": "0002",
+    "tittle": "Titulo Exemplo2",
+    "type": "Multiplecheckbox",
+    "requiered": true,
+    "values": [
+      { "name": "opcao teste2" },
+      { "name": "opcao teste2" },
+      { "name": "opcao teste2" },
+      { "name": "opcao teste2" },
+      { "name": "opcao teste2" }
+    ]
+  }
+	]
+}
