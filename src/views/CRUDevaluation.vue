@@ -1,16 +1,30 @@
 <template>
   <div>
     <div class="text-900 text-3xl font-medium mb-3 align-items-center">
-      <Button
-        label="Nova Pergunta"
-        class="p-button-raised p-button-rounded p-button-lg"
-        v-on:click="showDialog()"
-      />
+      <div class="py-4 px-2">
+        <h2>Titulo aqui!!</h2>
+      </div>
+      <div class="grid">
+        <div class="col-2 px-2">
+          <Button
+            label="Nova Pergunta"
+            class="p-button-raised p-button-outlined p-button-lg"
+            v-on:click="showDialog()"
+          />
+        </div>
+        <div class="col-2 px-2">
+          <Button
+            label="Nova Categoria"
+            class="p-button-raised p-button-outlined p-button-lg"
+            v-on:click="addCategory()"
+          />
+        </div>
+      </div>
     </div>
   </div>
   <div class="card">
     <TabView :activeIndex="activeIndex">
-      <TabPanel header="Categoria 1">
+      <TabPanel header="Categoria 1" scrollable>
         <div class="card">
           <div v-if="perguntaFake != null">
             <div v-if="perguntaFake[0].type == 'Multiplecheckbox'">
