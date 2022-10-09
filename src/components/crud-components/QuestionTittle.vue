@@ -1,7 +1,7 @@
 <template>
-  <label :for="questionTittle"
+  <label :for="qTittle"
     ><b
-      ><h4>{{ questionTittle }}</h4></b
+      ><h4>{{ qTittle }}</h4></b
     ></label
   >
 </template>
@@ -9,11 +9,10 @@
 export default {
   // name: "QuestionTittle",
   props: {
-    questionTittle: {
+    qTittle: {
       type: String,
       required: true,
     },
-  
   },
 };
 </script>
