@@ -9,12 +9,20 @@
     </div>
   </div>
   <div class="card">
-    <div v-if="perguntaFake != null">
-      <div v-if="perguntaFake[0].type == 'Multiplecheckbox'">
-        <QuestionTittle :questionTittle="perguntaFake[0].tittle" />
-        <QuestionChoice :question="perguntaFake" />
-      </div>
-    </div>
+    <TabView :activeIndex="activeIndex">
+      <TabPanel header="Categoria 1">
+        <div class="card">
+          <div v-if="perguntaFake != null">
+            <div v-if="perguntaFake[0].type == 'Multiplecheckbox'">
+              <QuestionTittle :questionTittle="perguntaFake[0].tittle" />
+              <QuestionChoice :question="perguntaFake" />
+            </div>
+          </div></div
+      ></TabPanel>
+      <TabPanel v-for="i in 5" :key="i" :header="titulo(i)">
+        Categoria {{ i + 1 }}
+      </TabPanel>
+    </TabView>
   </div>
 
   <Dialog
@@ -294,6 +302,7 @@ export default {
   methods: {
     hideDialog() {
       this.createEditVisible = false;
+      this.clearInputs();
     },
     showDialog() {
       this.createEditVisible = true;
@@ -327,12 +336,12 @@ export default {
             values: [
               { name: this.labelsUnique[0] },
               { name: this.labelsUnique[1] },
-              { name: this.labelsUnique[2] },
-              { name: this.labelsUnique[3] },
-              { name: this.labelsUnique[4] },
             ],
           },
         ];
+        for (let i = 2; i < this.labelsUnique.length; i++) {
+          this.options[0].values.push({ name: this.labelsUnique[i] });
+        }
       } else if (this.selectedQuestionOption.value == 2) {
         this.options = [
           {
@@ -418,7 +427,7 @@ export default {
       // });
       console.log(this.options[0].values);
       console.log("Requerido: " + this.options[0].requiered);
-      this.clearInputs();
+
       this.hideDialog();
     },
     clearInputs() {
@@ -431,6 +440,11 @@ export default {
       this.labelsMultiple = [];
       this.labelsUnique = [];
       this.questionTittle = "";
+      this.numQuestionsMultiple = 2;
+      this.numQuestionsUnique = 2;
+    },
+    titulo(i) {
+      return "Categoria " + (i + 1);
     },
   },
 };
