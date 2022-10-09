@@ -63,6 +63,7 @@ Para manter uma maior padronização os commits devem ser realizados seguindo o 
 - **DOCS**: Mudanças / Ajustes na documentação
 - **CI**: Ajuste nas configurações do CI
 - **BUILD**: Ajustes nas configurações de Build
+- **CLEAN**: Limpeza de Codigo
 
 
 
