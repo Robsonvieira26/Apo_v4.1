@@ -244,7 +244,6 @@
 </template>
 <script>
 import QuestionCard from "@/components/crud-components/QuestionCard.vue";
-
 import EvaluationService from "../service/EvaluationService";
 
 export default {
@@ -256,23 +255,6 @@ export default {
     return {
       evaluationService: null,
       questions: null,
-      //Dados pergunta fake
-      perguntaFake: [
-        {
-          tittle: "Titulo Exemplo",
-          type: "Multiplecheckbox",
-          requiered: this.requieredQuestion,
-          values: [
-            { name: "opcao teste" },
-            { name: "opcao teste" },
-            { name: "opcao teste" },
-            { name: "opcao teste" },
-            { name: "opcao teste" },
-          ],
-        },
-      ],
-      //Dados pergunta fake
-
       createEditVisible: false,
       numQuestionsMultiple: 2,
       numQuestionsUnique: 2,

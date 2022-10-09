@@ -2,28 +2,28 @@
 	"data": [
 	{
 		"id": "0001",
-    "tittle": "Titulo Exemplo",
+    "tittle": "Multiplecheckbox Example",
     "type": "Multiplecheckbox",
     "requiered": true,
     "values": [
-      { "name": "opcao teste" },
-      { "name": "opcao teste" },
-      { "name": "opcao teste" },
-      { "name": "opcao teste" },
-      { "name": "opcao teste" }
+      { "name": "Opcao teste" },
+      { "name": "Opcao teste" },
+      { "name": "Opcao teste" },
+      { "name": "Opcao teste" },
+      { "name": "Opcao teste" }
     ]
   },
   {
 		"id": "0002",
-    "tittle": "Titulo Exemplo2",
-    "type": "Multiplecheckbox",
+    "tittle": "Uniquecheckbox example",
+    "type": "Uniquecheckbox",
     "requiered": true,
     "values": [
-      { "name": "opcao teste2" },
-      { "name": "opcao teste2" },
-      { "name": "opcao teste2" },
-      { "name": "opcao teste2" },
-      { "name": "opcao teste2" }
+      { "name": "Opcao teste2-1" },
+      { "name": "Opcao teste2-2" },
+      { "name": "Opcao teste2-3" },
+      { "name": "Opcao teste2-4" },
+      { "name": "Opcao teste2-5" }
     ]
   }
 	]
