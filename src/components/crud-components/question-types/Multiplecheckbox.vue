@@ -4,7 +4,6 @@
       <div class="field-checkbox mb-0">
         <Checkbox name="choices" :value="index" v-model="choices" />
         <label :for="type">{{ valueQuestion.name }}</label>
-        {{ valueQuestion.name }} {{ choices }} {{ index }}
       </div>
     </div>
   </div>
