@@ -1,26 +1,76 @@
 <template>
   <div>
+    <!-- Titulo -->
     <div class="text-900 text-3xl font-medium mb-3 align-items-center">
-      <div class="py-4 px-2">
-        <h2>Titulo aqui!!</h2>
+      <div
+        class="flex justify-content-between py-3 px-3 flex-wrap border-round border-1 surface-border"
+      >
+        <div
+          class="flex align-items-center justify-content-center font-bold text-white"
+        >
+          {{ evaluationTittle }}
+        </div>
+        <div
+          class="flex align-items-center justify-content-center font-bold text-white"
+        >
+          <Button
+            label="Editar Titulo"
+            icon="pi pi-pencil"
+            class="p-button-text"
+            v-on:click="showEditTitle()"
+          ></Button>
+        </div>
       </div>
-      <div class="grid">
-        <div class="col-2 px-2">
-          <Button
-            label="Nova Pergunta"
-            class="p-button-raised p-button-outlined p-button-lg"
-            v-on:click="showDialog()"
-          />
+      <Dialog
+        v-model:visible="editTittleVisible"
+        header="Editar Titulo"
+        :style="{ width: '600px' }"
+        :modal="true"
+        class="p-fluid"
+      >
+        <div class="formgrid grid px-2">
+          <div class="field col">
+            <label for="evaluationTittle">Novo Titulo</label>
+            <InputText
+              id="evaluationTittle"
+              type="text"
+              v-model="evaluationTittle"
+            />
+          </div>
         </div>
-        <div class="col-2 px-2">
-          <Button
-            label="Nova Seção"
-            class="p-button-raised p-button-outlined p-button-lg"
-            v-on:click="addCategory()"
-          />
-        </div>
+      </Dialog>
+    </div>
+    <!-- Titulo -->
+    <!-- Botões -->
+    <!-- <div class="grid py-4">
+      <div class="col-2 px-2">
+        <Button
+          label="Nova Pergunta"
+          class="p-button-raised p-button-outlined p-button-lg"
+          v-on:click="showDialog()"
+        />
+      </div>
+      <div class="col-2 px-2">
+       
+      </div>
+    </div> -->
+    <div class="formgroup-inline">
+      <div class="field">
+        <Button
+          label="Nova Pergunta"
+          class="p-button-raised p-button-outlined p-button-lg"
+          v-on:click="showDialog()"
+        />
+      </div>
+      <div class="field">
+        <Button
+          label="Nova Seção"
+          class="p-button-raised p-button-outlined p-button-lg"
+          v-on:click="addCategory()"
+        />
       </div>
     </div>
+    <!-- Botões -->
   </div>
   <div class="card">
     <TabView
@@ -216,11 +266,11 @@
           </div>
           <div class="formgrid grid px-2">
             <div v-for="i in 5" :key="i" class="field col-6">
-              <label for="labelsLikert[0]">Alternativa {{ i }}</label>
+              <label :for="labelsLikert[i]">Alternativa {{ i }}</label>
               <InputText
-                id="labelsLikert[0]"
+                :id="labelsLikert[i]"
                 type="text"
-                v-model="labelsLikert[0]"
+                v-model="labelsLikert[i]"
               />
             </div>
           </div>
@@ -253,6 +303,8 @@ export default {
   },
   data() {
     return {
+      editTittleVisible: false,
+      evaluationTittle: "Titulo Padrão",
       evaluationService: null,
       questions: null,
       question: null,
@@ -264,7 +316,6 @@ export default {
       labelsLikert: [],
       labelsMultiple: [],
       labelsUnique: [],
-      options: [],
       questionTittle: "",
       cascadeOptions: [
         { name: "Multipla Escolha", value: 0 },
@@ -323,6 +374,12 @@ export default {
     }
   },
   methods: {
+    showEditTitle() {
+      this.editTittleVisible = true;
+    },
+    hideEditTitle() {
+      this.editTittleVisible = false;
+    },
     addCategory() {
       console.log(this.questions[0]);
     },
@@ -479,7 +536,7 @@ export default {
       this.numQuestionsUnique = 2;
     },
     titulo(i) {
-      return "Categoria " + (i + 1);
+      return "Seção " + (i + 1);
     },
   },
 };
