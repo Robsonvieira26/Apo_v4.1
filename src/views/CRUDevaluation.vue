@@ -14,7 +14,7 @@
         </div>
         <div class="col-2 px-2">
           <Button
-            label="Nova Categoria"
+            label="Nova Seção"
             class="p-button-raised p-button-outlined p-button-lg"
             v-on:click="addCategory()"
           />
@@ -25,22 +25,22 @@
   <div class="card">
     <TabView
       ><!--:activeIndex="activeIndex"-->
-      <TabPanel header="Categoria 1">
+      <TabPanel header="Seção 1">
         <!-- <div class="card"> -->
-          <div v-if="questions == null">
-            <!-- TODO:CASO SEJA NULo SKELETON -->
-          </div>
+        <div v-if="questions == null">
+          <!-- TODO:CASO SEJA NULo SKELETON -->
+        </div>
 
-          <div v-if="questions != null">
-            <div v-for="question in questions" :key="question">
-              <QuestionCard
-                :qTittle="question.tittle"
-                :qType="question.type"
-                :qValues="question.values"
-              />
-            </div>
-            <!-- {{ questions[0].tittle }} -->
+        <div v-if="questions != null">
+          <div v-for="question in questions" :key="question">
+            <QuestionCard
+              :qTittle="question.tittle"
+              :qType="question.type"
+              :qValues="question.values"
+            />
           </div>
+          <!-- {{ questions[0].tittle }} -->
+        </div>
         <!-- </div> -->
       </TabPanel>
       <!-- <TabPanel v-for="i in 5" :key="i" :header="titulo(i)">
@@ -101,9 +101,9 @@
             <div v-for="i in numQuestionsMultiple" :key="i" class="field col-6">
               <label for="labelsMultiple[i]">Alternativa {{ i }}</label>
               <InputText
-                id="labelsMultiple[i]"
+                id="labelsMultiple[i-1]"
                 type="text"
-                v-model="labelsMultiple[i]"
+                v-model="labelsMultiple[i - 1]"
               />
             </div>
           </div>
@@ -255,6 +255,7 @@ export default {
     return {
       evaluationService: null,
       questions: null,
+      question: null,
       createEditVisible: false,
       numQuestionsMultiple: 2,
       numQuestionsUnique: 2,
@@ -336,9 +337,11 @@ export default {
     saveQuestion() {
       // console.log(this.selectedQuestionOption);
       if (this.selectedQuestionOption.value == 0) {
-        // console.log("Multipla Escolha");
-        this.options = [
+        console.log("Multipla Escolha");
+        this.question = [
           {
+            //TODO: Gerar ID
+            id: "0003",
             tittle: this.questionTittle,
             type: "Multiplecheckbox",
             requiered: this.requieredQuestion,
@@ -348,12 +351,21 @@ export default {
             ],
           },
         ];
-        for (let i = 2; i < this.labelsMultiple.length; i++) {
-          this.options[0].values.push({ name: this.labelsMultiple[i] });
+        if (this.numQuestionsMultiple > 2) {
+          for (let i = 2; i < this.numQuestionsMultiple; i++) {
+            console.log(i);
+            if (this.labelsMultiple[i] != null) {
+              console.log(this.labelsMultiple[i]);
+              this.question[0].values.push({ name: this.labelsMultiple[i] });
+            }
+          }
         }
-        //  console.log(this.options);
+        // console.log("Saiu loop");
+        // console.log(this.question[0]);
+        this.questions.push(this.question[0]);
+        //TODO:Toast de Sucesso
       } else if (this.selectedQuestionOption.value == 1) {
-        this.options = [
+        this.question = [
           {
             tittle: this.questionTittle,
             type: "Uniquecheckbox",
@@ -365,10 +377,11 @@ export default {
           },
         ];
         for (let i = 2; i < this.labelsUnique.length; i++) {
-          this.options[0].values.push({ name: this.labelsUnique[i] });
+          this.question[0].values.push({ name: this.labelsUnique[i] });
         }
+        this.questions.push(this.question[0]);
       } else if (this.selectedQuestionOption.value == 2) {
-        this.options = [
+        this.question = [
           {
             tittle: this.questionTittle,
             type: "text",
@@ -376,9 +389,10 @@ export default {
             values: [{ name: "Texto" }],
           },
         ];
+        this.questions.push(this.question[0]);
       } else if (this.selectedQuestionOption.value == 3) {
         // console.log("Escala Likert: 1-5");
-        this.options = [
+        this.question = [
           {
             tittle: this.questionTittle,
             type: "Likert",
@@ -392,10 +406,12 @@ export default {
             ],
           },
         ];
+        this.questions.push(this.question[0]);
+
         // console.log(this.options);
       } else if (this.selectedQuestionOption.value == 4) {
         // console.log("Escala Likert: Pessimo - Otimo");
-        this.options = [
+        this.question = [
           {
             tittle: this.questionTittle,
             type: "Likert",
@@ -410,9 +426,10 @@ export default {
           },
         ];
         // console.log(this.options);
+        this.questions.push(this.question[0]);
       } else if (this.selectedQuestionOption.value == 5) {
         // console.log("Escala Likert: Pouco Iluminado - Muito Iluminado");
-        this.options = [
+        this.question = [
           {
             tittle: this.questionTittle,
             type: "Likert",
@@ -426,10 +443,10 @@ export default {
             ],
           },
         ];
-        // console.log(this.options);
+        this.questions.push(this.question[0]);
       } else if (this.selectedQuestionOption.value == 6) {
         // console.log("Escala Likert: Personalizar...");
-        this.options = [
+        this.question = [
           {
             tittle: this.questionTittle,
             type: "Likert",
@@ -443,23 +460,16 @@ export default {
             ],
           },
         ];
+        this.questions.push(this.question[0]);
       }
-      // console.log(this.options[0]);
-      console.log("Pergunta do tipo:" + this.options[0].type);
-      console.log("Resposta do tipo:");
-      // this.options[0].values.forEach((element) => {
-      //   console.log(element.name);
-      // });
-      console.log(this.options[0].values);
-      console.log("Requerido: " + this.options[0].requiered);
-
       this.hideDialog();
     },
+
     clearInputs() {
       this.selectedQuestionOption = null;
       this.requieredQuestion = false;
       this.labels = [];
-      this.options = [];
+      this.question = [];
       this.selectLikertChoice = null;
       this.labelsLikert = [];
       this.labelsMultiple = [];
