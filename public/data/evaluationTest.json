@@ -2,6 +2,20 @@
 	"data": [
     {
       "id": "1000",
+      "tittle": "Table Example",
+      "type": "Table",
+      "requiered": true,
+      "values": [
+        { "name": "1" },
+        { "name": "2" },
+        { "name": "3" },
+        { "name": "4" },
+        { "name": "5" }
+        
+      ]
+    },
+    {
+      "id": "1000",
       "tittle": "Likert Example",
       "type": "Likert",
       "requiered": true,
