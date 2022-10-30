@@ -89,7 +89,6 @@
               :qValues="question.values"
             />
           </div>
-          <!-- {{ questions[0].tittle }} -->
         </div>
         <!-- </div> -->
       </TabPanel>
@@ -123,7 +122,13 @@
       </div>
       <div v-if="selectedQuestionOption != null">
         <div v-if="selectedQuestionOption.name == 'Multipla Escolha'">
-          <div class="formgrid grid px-2">
+          {{numQuestions.type}}
+          <QMultiplecheckbox
+            :qTittle="tittle"
+            :qLabels="labels"
+            :qNumQuestions="numQuestions"
+          />
+          <!-- <div class="formgrid grid px-2">
             <div class="field col-8">
               <InputText
                 type="text"
@@ -151,12 +156,12 @@
             <div v-for="i in numQuestionsMultiple" :key="i" class="field col-6">
               <label for="labelsMultiple[i]">Alternativa {{ i }}</label>
               <InputText
-                id="labelsMultiple[i-1]"
+                :id="labelsMultiple[i - 1]"
                 type="text"
                 v-model="labelsMultiple[i - 1]"
               />
             </div>
-          </div>
+          </div> -->
         </div>
         <div v-if="selectedQuestionOption.name == 'Escolha Unica'">
           <div class="formgrid grid px-2">
@@ -187,9 +192,9 @@
             <div v-for="i in numQuestionsUnique" :key="i" class="field col-6">
               <label for="labelsUnique[i]">Alternativa {{ i }}</label>
               <InputText
-                id="labelsUnique[i]"
+                :id="labelsUnique[i - 1]"
                 type="text"
-                v-model="labelsUnique[i]"
+                v-model="labelsUnique[i - 1]"
               />
             </div>
           </div>
@@ -266,15 +271,85 @@
           </div>
           <div class="formgrid grid px-2">
             <div v-for="i in 5" :key="i" class="field col-6">
-              <label :for="labelsLikert[i]">Alternativa {{ i }}</label>
+              <label :for="labelsLikert[i - 1]">Alternativa {{ i }}</label>
               <InputText
-                :id="labelsLikert[i]"
+                :id="labelsLikert[i - 1]"
                 type="text"
-                v-model="labelsLikert[i]"
+                v-model="labelsLikert[i - 1]"
               />
             </div>
           </div>
         </div>
+        <div v-if="selectedQuestionOption.name == 'Multiplas Escalas Likert'">
+          <!-- Escala Likert: 1-5 -->
+          <div class="formgrid grid px-2">
+            <div class="field col-8">
+              <InputText
+                type="text"
+                placeholder="Titulo da pergunta"
+                v-model="questionTittle"
+              ></InputText>
+            </div>
+            <div class="field col-4">
+              <InputNumber
+                inputId="horizontal"
+                v-model="numQuestionsLikert"
+                showButtons
+                buttonLayout="horizontal"
+                :step="1"
+                :min="2"
+                :max="15"
+                decrementButtonClass="p-button-danger"
+                incrementButtonClass="p-button-success"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+              />
+            </div>
+            <div v-for="i in numQuestionsLikert" :key="i" class="field px-2">
+              <div class="formgroup-inline">
+                <div class="field">
+                  <label for="firstname5" class="p-sr-only">Firstname</label>
+                  <InputText
+                    id="firstname5"
+                    type="text"
+                    placeholder="Subtitulo da pergunta"
+                  />
+                </div>
+                <div class="field">
+                  <label for="lastname5" class="p-sr-only">Lastname</label>
+                  <Dropdown
+                    v-model="selectedMultipleLikert"
+                    :options="multipleLikert"
+                    optionLabel="name"
+                    placeholder="Selecione o tipo de escala"
+                  />
+                </div>
+              </div>
+              ESCALA VEM AQUI
+              <Divider></Divider>
+            </div>
+
+            <!-- <div v-for="i in numQuestionsLikert" :key="i">
+              <div class="field col">
+                <InputText
+                  :id="labelsMultiple[i - 1]"
+                  type="text"
+                  placeholder="Subtitulo da pergunta"
+                  v-model="labelsMultiple[i - 1]"
+                />
+              </div>
+              <div class="field col">
+                <Dropdown
+                  v-model="selectedMultipleLikert"
+                  :options="multipleLikert"
+                  optionLabel="name"
+                  placeholder="Selecione o tipo de escala"
+                />
+              </div>
+            </div> -->
+          </div>
+        </div>
+
         <!-- Escala Likert -->
         <div class="p-2">
           <h5>Questão Obrigatoria?</h5>
@@ -295,22 +370,37 @@
 <script>
 import QuestionCard from "@/components/crud-components/QuestionCard.vue";
 import EvaluationService from "../service/EvaluationService";
-
+import QMultiplecheckbox from "../components/crud-components/question-choices/QMultiplecheckbox.vue";
 export default {
   name: "CRUDevaluation",
   components: {
     QuestionCard,
+    QMultiplecheckbox,
   },
   data() {
     return {
+      tittle: "",
+      labels: [],
+      numQuestions: 2,
+
       editTittleVisible: false,
       evaluationTittle: "Titulo Padrão",
       evaluationService: null,
       questions: null,
       question: null,
+      selectedMultipleLikert: null,
+      multipleLikert: [
+        { name: "1-5", code: "1-5" },
+        { name: "Pessimo - Otimo", code: "Pessimo - Otimo" },
+        {
+          name: "Muito Escuros - Bem Iluminados",
+          code: "Muito Escuros - Bem Iluminados",
+        },
+      ],
       createEditVisible: false,
       numQuestionsMultiple: 2,
       numQuestionsUnique: 2,
+      numQuestionsLikert: 2,
       selectedQuestionOption: null,
       requieredQuestion: false,
       labelsLikert: [],
@@ -330,6 +420,7 @@ export default {
             { name: "Personalizar...", value: 6 },
           ],
         },
+        { name: "Multiplas Escalas Likert" },
       ],
 
       // Likret Options
@@ -392,133 +483,138 @@ export default {
       // console.log("Clicou");
     },
     saveQuestion() {
-      // console.log(this.selectedQuestionOption);
-      if (this.selectedQuestionOption.value == 0) {
-        console.log("Multipla Escolha");
-        this.question = [
-          {
-            //TODO: Gerar ID
-            id: "0003",
-            tittle: this.questionTittle,
-            type: "Multiplecheckbox",
-            requiered: this.requieredQuestion,
-            values: [
-              { name: this.labelsMultiple[0] },
-              { name: this.labelsMultiple[1] },
-            ],
-          },
-        ];
-        if (this.numQuestionsMultiple > 2) {
-          for (let i = 2; i < this.numQuestionsMultiple; i++) {
-            console.log(i);
-            if (this.labelsMultiple[i] != null) {
-              console.log(this.labelsMultiple[i]);
-              this.question[0].values.push({ name: this.labelsMultiple[i] });
-            }
-          }
-        }
-        // console.log("Saiu loop");
-        // console.log(this.question[0]);
-        this.questions.push(this.question[0]);
-        //TODO:Toast de Sucesso
-      } else if (this.selectedQuestionOption.value == 1) {
-        this.question = [
-          {
-            tittle: this.questionTittle,
-            type: "Uniquecheckbox",
-            requiered: this.requieredQuestion,
-            values: [
-              { name: this.labelsUnique[0] },
-              { name: this.labelsUnique[1] },
-            ],
-          },
-        ];
-        for (let i = 2; i < this.labelsUnique.length; i++) {
-          this.question[0].values.push({ name: this.labelsUnique[i] });
-        }
-        this.questions.push(this.question[0]);
-      } else if (this.selectedQuestionOption.value == 2) {
-        this.question = [
-          {
-            tittle: this.questionTittle,
-            type: "text",
-            requiered: this.requieredQuestion,
-            values: [{ name: "Texto" }],
-          },
-        ];
-        this.questions.push(this.question[0]);
-      } else if (this.selectedQuestionOption.value == 3) {
-        // console.log("Escala Likert: 1-5");
-        this.question = [
-          {
-            tittle: this.questionTittle,
-            type: "Likert",
-            requiered: this.requieredQuestion,
-            values: [
-              { name: this.selectLikert1Options[0].name },
-              { name: this.selectLikert1Options[1].name },
-              { name: this.selectLikert1Options[2].name },
-              { name: this.selectLikert1Options[3].name },
-              { name: this.selectLikert1Options[4].name },
-            ],
-          },
-        ];
-        this.questions.push(this.question[0]);
+      console.log(this.tittle)
+      console.log(this.labels)
+      console.log(this.numQuestions)
 
-        // console.log(this.options);
-      } else if (this.selectedQuestionOption.value == 4) {
-        // console.log("Escala Likert: Pessimo - Otimo");
-        this.question = [
-          {
-            tittle: this.questionTittle,
-            type: "Likert",
-            requiered: this.requieredQuestion,
-            values: [
-              { name: this.selectLikert2Options[0].name },
-              { name: this.selectLikert2Options[1].name },
-              { name: this.selectLikert2Options[2].name },
-              { name: this.selectLikert2Options[3].name },
-              { name: this.selectLikert2Options[4].name },
-            ],
-          },
-        ];
-        // console.log(this.options);
-        this.questions.push(this.question[0]);
-      } else if (this.selectedQuestionOption.value == 5) {
-        // console.log("Escala Likert: Pouco Iluminado - Muito Iluminado");
-        this.question = [
-          {
-            tittle: this.questionTittle,
-            type: "Likert",
-            requiered: this.requieredQuestion,
-            values: [
-              { name: this.selectLikert3Options[0].name },
-              { name: this.selectLikert3Options[1].name },
-              { name: this.selectLikert3Options[2].name },
-              { name: this.selectLikert3Options[3].name },
-              { name: this.selectLikert3Options[4].name },
-            ],
-          },
-        ];
-        this.questions.push(this.question[0]);
-      } else if (this.selectedQuestionOption.value == 6) {
-        // console.log("Escala Likert: Personalizar...");
-        this.question = [
-          {
-            tittle: this.questionTittle,
-            type: "Likert",
-            requiered: this.requieredQuestion,
-            values: [
-              { name: this.labelsLikert[0] },
-              { name: this.labelsLikert[1] },
-              { name: this.labelsLikert[2] },
-              { name: this.labelsLikert[3] },
-              { name: this.labelsLikert[4] },
-            ],
-          },
-        ];
-        this.questions.push(this.question[0]);
-      }
+
+      // console.log(this.selectedQuestionOption);
+      // if (this.selectedQuestionOption.value == 0) {
+      //   console.log("Multipla Escolha");
+      //   this.question = [
+      //     {
+      //       //TODO: Gerar ID
+      //       id: "0003",
+      //       tittle: this.questionTittle,
+      //       type: "Multiplecheckbox",
+      //       requiered: this.requieredQuestion,
+      //       values: [
+      //         { name: this.labelsMultiple[0] },
+      //         { name: this.labelsMultiple[1] },
+      //       ],
+      //     },
+      //   ];
+      //   if (this.numQuestionsMultiple > 2) {
+      //     for (let i = 2; i < this.numQuestionsMultiple; i++) {
+      //       console.log(i);
+      //       if (this.labelsMultiple[i] != null) {
+      //         console.log(this.labelsMultiple[i]);
+      //         this.question[0].values.push({ name: this.labelsMultiple[i] });
+      //       }
+      //     }
+      //   }
+      //   // console.log("Saiu loop");
+      //   // console.log(this.question[0]);
+      //   this.questions.push(this.question[0]);
+      //   //TODO:Toast de Sucesso
+      // } else if (this.selectedQuestionOption.value == 1) {
+      //   this.question = [
+      //     {
+      //       tittle: this.questionTittle,
+      //       type: "Uniquecheckbox",
+      //       requiered: this.requieredQuestion,
+      //       values: [
+      //         { name: this.labelsUnique[0] },
+      //         { name: this.labelsUnique[1] },
+      //       ],
+      //     },
+      //   ];
+      //   for (let i = 2; i < this.labelsUnique.length; i++) {
+      //     this.question[0].values.push({ name: this.labelsUnique[i] });
+      //   }
+      //   this.questions.push(this.question[0]);
+      // } else if (this.selectedQuestionOption.value == 2) {
+      //   this.question = [
+      //     {
+      //       tittle: this.questionTittle,
+      //       type: "Text",
+      //       requiered: this.requieredQuestion,
+      //       values: [{ name: "Texto" }],
+      //     },
+      //   ];
+      //   this.questions.push(this.question[0]);
+      // } else if (this.selectedQuestionOption.value == 3) {
+      //   // console.log("Escala Likert: 1-5");
+      //   this.question = [
+      //     {
+      //       tittle: this.questionTittle,
+      //       type: "Likert",
+      //       requiered: this.requieredQuestion,
+      //       values: [
+      //         { name: this.selectLikert1Options[0].name },
+      //         { name: this.selectLikert1Options[1].name },
+      //         { name: this.selectLikert1Options[2].name },
+      //         { name: this.selectLikert1Options[3].name },
+      //         { name: this.selectLikert1Options[4].name },
+      //       ],
+      //     },
+      //   ];
+      //   this.questions.push(this.question[0]);
+
+      //   // console.log(this.options);
+      // } else if (this.selectedQuestionOption.value == 4) {
+      //   // console.log("Escala Likert: Pessimo - Otimo");
+      //   this.question = [
+      //     {
+      //       tittle: this.questionTittle,
+      //       type: "Likert",
+      //       requiered: this.requieredQuestion,
+      //       values: [
+      //         { name: this.selectLikert2Options[0].name },
+      //         { name: this.selectLikert2Options[1].name },
+      //         { name: this.selectLikert2Options[2].name },
+      //         { name: this.selectLikert2Options[3].name },
+      //         { name: this.selectLikert2Options[4].name },
+      //       ],
+      //     },
+      //   ];
+      //   // console.log(this.options);
+      //   this.questions.push(this.question[0]);
+      // } else if (this.selectedQuestionOption.value == 5) {
+      //   // console.log("Escala Likert: Pouco Iluminado - Muito Iluminado");
+      //   this.question = [
+      //     {
+      //       tittle: this.questionTittle,
+      //       type: "Likert",
+      //       requiered: this.requieredQuestion,
+      //       values: [
+      //         { name: this.selectLikert3Options[0].name },
+      //         { name: this.selectLikert3Options[1].name },
+      //         { name: this.selectLikert3Options[2].name },
+      //         { name: this.selectLikert3Options[3].name },
+      //         { name: this.selectLikert3Options[4].name },
+      //       ],
+      //     },
+      //   ];
+      //   this.questions.push(this.question[0]);
+      // } else if (this.selectedQuestionOption.value == 6) {
+      //   // console.log("Escala Likert: Personalizar...");
+      //   this.question = [
+      //     {
+      //       tittle: this.questionTittle,
+      //       type: "Likert",
+      //       requiered: this.requieredQuestion,
+      //       values: [
+      //         { name: this.labelsLikert[0] },
+      //         { name: this.labelsLikert[1] },
+      //         { name: this.labelsLikert[2] },
+      //         { name: this.labelsLikert[3] },
+      //         { name: this.labelsLikert[4] },
+      //       ],
+      //     },
+      //   ];
+      //   this.questions.push(this.question[0]);
+      // }
       this.hideDialog();
     },
 

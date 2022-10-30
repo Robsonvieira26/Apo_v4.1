@@ -56,14 +56,16 @@ export default {
       items: [
         {
           label: "Remover",
-          icon: "pi pi-times",
+          icon: "pi pi-trash",
           command: () => {
-            this.$toast.add({
-              severity: "warn",
-              summary: "Delete",
-              detail: "Data Deleted",
-              life: 3000,
-            });
+            console.log("Remover");
+          },
+        },
+        {
+          label: "Ver Respostas",
+          icon: "pi pi-chart-bar",
+          command: () => {
+            console.log("Ver Respostas");
           },
         },
       ],
