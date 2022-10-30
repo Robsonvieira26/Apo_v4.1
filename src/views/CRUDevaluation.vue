@@ -122,12 +122,11 @@
       </div>
       <div v-if="selectedQuestionOption != null">
         <div v-if="selectedQuestionOption.name == 'Multipla Escolha'">
-          {{numQuestions.type}}
-          <QMultiplecheckbox
-            :qTittle="tittle"
-            :qLabels="labels"
-            :qNumQuestions="numQuestions"
-          />
+        
+          <QMultiplecheckbox @saveQuestion="saveQuestion($event)" />
+          <!-- :qTittle="tittle"
+          :qLabels="labels"
+          :qNumQuestions="numQuestions" -->
           <!-- <div class="formgrid grid px-2">
             <div class="field col-8">
               <InputText
@@ -350,8 +349,8 @@
           </div>
         </div>
 
-        <!-- Escala Likert -->
-        <div class="p-2">
+        <!-- FIM Escala Likert -->
+        <!-- <div class="p-2">
           <h5>Questão Obrigatoria?</h5>
           <InputSwitch inputId="switch1" v-model="requieredQuestion" />
           <br />
@@ -362,7 +361,7 @@
               @click="saveQuestion()"
             />
           </div>
-        </div>
+        </div> -->
       </div>
     </ScrollPanel>
   </Dialog>
@@ -387,7 +386,7 @@ export default {
       evaluationTittle: "Titulo Padrão",
       evaluationService: null,
       questions: null,
-      question: null,
+      question: {},
       selectedMultipleLikert: null,
       multipleLikert: [
         { name: "1-5", code: "1-5" },
@@ -482,11 +481,43 @@ export default {
       this.createEditVisible = true;
       // console.log("Clicou");
     },
-    saveQuestion() {
-      console.log(this.tittle)
-      console.log(this.labels)
-      console.log(this.numQuestions)
+    saveQuestion(event) {
+      this.question = [
+        {
+          //TODO: Gerar ID
+          id: "0003",
+          tittle: event.question["tittle"],
+          type: event.question["type"],
+          requiered: event.question["requiered"],
+          values: [],
+        },
+      ];
+      for (let i in event.question["values"]) {
+        // this.question.values.push(value);
+        this.question[0].values.push({ name: event.question["values"][i] });
+        // this.question[0].values.push({ name: this.labelsMultiple[i] });
+      }
+      //     for (let i = 2; i < this.numQuestionsMultiple; i++) {
+      //       console.log(i);
+      //       if (this.labelsMultiple[i] != null) {
+      //         console.log(this.labelsMultiple[i]);
+      //         this.question[0].values.push({ name: this.labelsMultiple[i] });
+      //       }
+      //
+      // for (let field in event.question) {
+      //   // console.log(field);
+      //   // console.log(event.question[field]);
+      //   // console.log("-----------");
+      //   this.question[field] = event.question[field];
+      // }
+      // console.log(event);
 
+      console.log(this.question);
+      // console.log(this.question.values);
+
+      // console.log(this.tittle);
+      // console.log(this.labels);
+      // console.log(this.numQuestions);
 
       // console.log(this.selectedQuestionOption);
       // if (this.selectedQuestionOption.value == 0) {
@@ -613,8 +644,10 @@ export default {
       //       ],
       //     },
       //   ];
-      //   this.questions.push(this.question[0]);
       // }
+
+      this.questions.push(this.question[0]);
+      console.log(this.questions);
       this.hideDialog();
     },
 
