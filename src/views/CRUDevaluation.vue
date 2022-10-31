@@ -77,8 +77,10 @@
       ><!--:activeIndex="activeIndex"-->
       <TabPanel header="Seção 1">
         <!-- <div class="card"> -->
-        <div v-if="questions == null">
-          <!-- TODO:CASO SEJA NULo SKELETON -->
+
+        <div v-if="questions == null || questions == []">
+          <!-- <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i> -->
+          Você ainda não adicionou nenhuma pergunta
         </div>
 
         <div v-if="questions != null">
@@ -122,141 +124,36 @@
       </div>
       <div v-if="selectedQuestionOption != null">
         <div v-if="selectedQuestionOption.name == 'Multipla Escolha'">
-        
           <QMultiplecheckbox @saveQuestion="saveQuestion($event)" />
-          <!-- :qTittle="tittle"
-          :qLabels="labels"
-          :qNumQuestions="numQuestions" -->
-          <!-- <div class="formgrid grid px-2">
-            <div class="field col-8">
-              <InputText
-                type="text"
-                placeholder="Titulo da pergunta"
-                v-model="questionTittle"
-              ></InputText>
-            </div>
-            <div class="field col-4">
-              <InputNumber
-                inputId="horizontal"
-                v-model="numQuestionsMultiple"
-                showButtons
-                buttonLayout="horizontal"
-                :step="1"
-                :min="2"
-                :max="15"
-                decrementButtonClass="p-button-danger"
-                incrementButtonClass="p-button-success"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-              />
-            </div>
-          </div>
-          <div class="formgrid grid px-2">
-            <div v-for="i in numQuestionsMultiple" :key="i" class="field col-6">
-              <label for="labelsMultiple[i]">Alternativa {{ i }}</label>
-              <InputText
-                :id="labelsMultiple[i - 1]"
-                type="text"
-                v-model="labelsMultiple[i - 1]"
-              />
-            </div>
-          </div> -->
         </div>
         <div v-if="selectedQuestionOption.name == 'Escolha Unica'">
-          <div class="formgrid grid px-2">
-            <div class="field col-8">
-              <InputText
-                type="text"
-                placeholder="Titulo da pergunta"
-                v-model="questionTittle"
-              ></InputText>
-            </div>
-            <div class="field col-4">
-              <InputNumber
-                inputId="horizontal"
-                v-model="numQuestionsUnique"
-                showButtons
-                buttonLayout="horizontal"
-                :step="1"
-                :min="2"
-                :max="15"
-                decrementButtonClass="p-button-danger"
-                incrementButtonClass="p-button-success"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-              />
-            </div>
-          </div>
-          <div class="formgrid grid px-2">
-            <div v-for="i in numQuestionsUnique" :key="i" class="field col-6">
-              <label for="labelsUnique[i]">Alternativa {{ i }}</label>
-              <InputText
-                :id="labelsUnique[i - 1]"
-                type="text"
-                v-model="labelsUnique[i - 1]"
-              />
-            </div>
-          </div>
+          <QUniquecheckbox @saveQuestion="saveQuestion($event)" />
         </div>
+
         <div v-if="selectedQuestionOption.name == 'Texto Livre'">
-          <div class="field">
-            <InputText
-              type="text"
-              placeholder="Titulo da pergunta"
-              v-model="questionTittle"
-            ></InputText>
-          </div>
+          <QText @saveQuestion="saveQuestion($event)" />
         </div>
         <!-- Escala Likert -->
         <div v-if="selectedQuestionOption.name == '1-5'">
-          <!-- Escala Likert: 1-5 -->
-          <div class="field">
-            <InputText
-              type="text"
-              placeholder="Titulo da pergunta"
-              v-model="questionTittle"
-            ></InputText>
-          </div>
-          <SelectButton
-            v-model="selectLikertChoice"
-            :options="selectLikert1Options"
-            optionLabel="name"
-            :disabled="true"
+          <QLinkert
+            @saveQuestion="saveQuestion($event)"
+            :scale="selectLikert1Options"
           />
         </div>
         <div v-if="selectedQuestionOption.name == 'Pessimo - Otimo'">
           <!-- Escala Likert: Pessimo - Otimo -->
-          <div class="field">
-            <InputText
-              type="text"
-              placeholder="Titulo da pergunta"
-              v-model="questionTittle"
-            ></InputText>
-          </div>
-
-          <SelectButton
-            v-model="selectLikertChoice"
-            :options="selectLikert2Options"
-            optionLabel="name"
-            :disabled="true"
+          <QLinkert
+            @saveQuestion="saveQuestion($event)"
+            :scale="selectLikert2Options"
           />
         </div>
         <div
           v-if="selectedQuestionOption.name == 'Muito Escuros - Bem Iluminados'"
         >
           <!-- Escala Likert: Pouco Iluminado - Muito Iluminado -->
-          <div class="field">
-            <InputText
-              type="text"
-              placeholder="Titulo da pergunta"
-              v-model="questionTittle"
-            ></InputText>
-          </div>
-          <SelectButton
-            v-model="selectLikertChoice"
-            :options="selectLikert3Options"
-            optionLabel="name"
-            :disabled="true"
+          <QLinkert
+            @saveQuestion="saveQuestion($event)"
+            :scale="selectLikert3Options"
           />
         </div>
         <div v-if="selectedQuestionOption.name == 'Personalizar...'">
@@ -370,11 +267,18 @@
 import QuestionCard from "@/components/crud-components/QuestionCard.vue";
 import EvaluationService from "../service/EvaluationService";
 import QMultiplecheckbox from "../components/crud-components/question-choices/QMultiplecheckbox.vue";
+import QUniquecheckbox from "../components/crud-components/question-choices/QUniquecheckbox.vue";
+import QText from "../components/crud-components/question-choices/QText.vue";
+import QLinkert from "../components/crud-components/question-choices/QLinkert.vue";
+
 export default {
   name: "CRUDevaluation",
   components: {
     QuestionCard,
     QMultiplecheckbox,
+    QUniquecheckbox,
+    QText,
+    QLinkert,
   },
   data() {
     return {
@@ -459,8 +363,9 @@ export default {
     if (this.questions == null) {
       console.log("Nulo");
     } else {
-      console.log(this.questions);
-      // console.log(this.questions.length);
+      console.log("Não nulo");
+      // console.log(this.questions.lenght);
+      //   // console.log(this.questions.length);
     }
   },
   methods: {
@@ -493,176 +398,27 @@ export default {
         },
       ];
       for (let i in event.question["values"]) {
-        // this.question.values.push(value);
         this.question[0].values.push({ name: event.question["values"][i] });
-        // this.question[0].values.push({ name: this.labelsMultiple[i] });
       }
-      //     for (let i = 2; i < this.numQuestionsMultiple; i++) {
-      //       console.log(i);
-      //       if (this.labelsMultiple[i] != null) {
-      //         console.log(this.labelsMultiple[i]);
-      //         this.question[0].values.push({ name: this.labelsMultiple[i] });
-      //       }
-      //
-      // for (let field in event.question) {
-      //   // console.log(field);
-      //   // console.log(event.question[field]);
-      //   // console.log("-----------");
-      //   this.question[field] = event.question[field];
-      // }
-      // console.log(event);
-
-      console.log(this.question);
-      // console.log(this.question.values);
-
-      // console.log(this.tittle);
-      // console.log(this.labels);
-      // console.log(this.numQuestions);
-
-      // console.log(this.selectedQuestionOption);
-      // if (this.selectedQuestionOption.value == 0) {
-      //   console.log("Multipla Escolha");
-      //   this.question = [
-      //     {
-      //       //TODO: Gerar ID
-      //       id: "0003",
-      //       tittle: this.questionTittle,
-      //       type: "Multiplecheckbox",
-      //       requiered: this.requieredQuestion,
-      //       values: [
-      //         { name: this.labelsMultiple[0] },
-      //         { name: this.labelsMultiple[1] },
-      //       ],
-      //     },
-      //   ];
-      //   if (this.numQuestionsMultiple > 2) {
-      //     for (let i = 2; i < this.numQuestionsMultiple; i++) {
-      //       console.log(i);
-      //       if (this.labelsMultiple[i] != null) {
-      //         console.log(this.labelsMultiple[i]);
-      //         this.question[0].values.push({ name: this.labelsMultiple[i] });
-      //       }
-      //     }
-      //   }
-      //   // console.log("Saiu loop");
-      //   // console.log(this.question[0]);
-      //   this.questions.push(this.question[0]);
-      //   //TODO:Toast de Sucesso
-      // } else if (this.selectedQuestionOption.value == 1) {
-      //   this.question = [
-      //     {
-      //       tittle: this.questionTittle,
-      //       type: "Uniquecheckbox",
-      //       requiered: this.requieredQuestion,
-      //       values: [
-      //         { name: this.labelsUnique[0] },
-      //         { name: this.labelsUnique[1] },
-      //       ],
-      //     },
-      //   ];
-      //   for (let i = 2; i < this.labelsUnique.length; i++) {
-      //     this.question[0].values.push({ name: this.labelsUnique[i] });
-      //   }
-      //   this.questions.push(this.question[0]);
-      // } else if (this.selectedQuestionOption.value == 2) {
-      //   this.question = [
-      //     {
-      //       tittle: this.questionTittle,
-      //       type: "Text",
-      //       requiered: this.requieredQuestion,
-      //       values: [{ name: "Texto" }],
-      //     },
-      //   ];
-      //   this.questions.push(this.question[0]);
-      // } else if (this.selectedQuestionOption.value == 3) {
-      //   // console.log("Escala Likert: 1-5");
-      //   this.question = [
-      //     {
-      //       tittle: this.questionTittle,
-      //       type: "Likert",
-      //       requiered: this.requieredQuestion,
-      //       values: [
-      //         { name: this.selectLikert1Options[0].name },
-      //         { name: this.selectLikert1Options[1].name },
-      //         { name: this.selectLikert1Options[2].name },
-      //         { name: this.selectLikert1Options[3].name },
-      //         { name: this.selectLikert1Options[4].name },
-      //       ],
-      //     },
-      //   ];
-      //   this.questions.push(this.question[0]);
-
-      //   // console.log(this.options);
-      // } else if (this.selectedQuestionOption.value == 4) {
-      //   // console.log("Escala Likert: Pessimo - Otimo");
-      //   this.question = [
-      //     {
-      //       tittle: this.questionTittle,
-      //       type: "Likert",
-      //       requiered: this.requieredQuestion,
-      //       values: [
-      //         { name: this.selectLikert2Options[0].name },
-      //         { name: this.selectLikert2Options[1].name },
-      //         { name: this.selectLikert2Options[2].name },
-      //         { name: this.selectLikert2Options[3].name },
-      //         { name: this.selectLikert2Options[4].name },
-      //       ],
-      //     },
-      //   ];
-      //   // console.log(this.options);
-      //   this.questions.push(this.question[0]);
-      // } else if (this.selectedQuestionOption.value == 5) {
-      //   // console.log("Escala Likert: Pouco Iluminado - Muito Iluminado");
-      //   this.question = [
-      //     {
-      //       tittle: this.questionTittle,
-      //       type: "Likert",
-      //       requiered: this.requieredQuestion,
-      //       values: [
-      //         { name: this.selectLikert3Options[0].name },
-      //         { name: this.selectLikert3Options[1].name },
-      //         { name: this.selectLikert3Options[2].name },
-      //         { name: this.selectLikert3Options[3].name },
-      //         { name: this.selectLikert3Options[4].name },
-      //       ],
-      //     },
-      //   ];
-      //   this.questions.push(this.question[0]);
-      // } else if (this.selectedQuestionOption.value == 6) {
-      //   // console.log("Escala Likert: Personalizar...");
-      //   this.question = [
-      //     {
-      //       tittle: this.questionTittle,
-      //       type: "Likert",
-      //       requiered: this.requieredQuestion,
-      //       values: [
-      //         { name: this.labelsLikert[0] },
-      //         { name: this.labelsLikert[1] },
-      //         { name: this.labelsLikert[2] },
-      //         { name: this.labelsLikert[3] },
-      //         { name: this.labelsLikert[4] },
-      //       ],
-      //     },
-      //   ];
-      // }
 
       this.questions.push(this.question[0]);
-      console.log(this.questions);
+      // console.log(this.questions);
       this.hideDialog();
     },
 
     clearInputs() {
-      this.selectedQuestionOption = null;
-      this.requieredQuestion = false;
-      this.labels = [];
       this.question = [];
-      this.selectLikertChoice = null;
-      this.labelsLikert = [];
-      this.labelsMultiple = [];
-      this.labelsUnique = [];
-      this.questionTittle = "";
-      this.numQuestionsMultiple = 2;
-      this.numQuestionsUnique = 2;
+
+      // this.selectedQuestionOption = null;
+      // this.requieredQuestion = false;
+      // this.labels = [];
+      // this.selectLikertChoice = null;
+      // this.labelsLikert = [];
+      // this.labelsMultiple = [];
+      // this.labelsUnique = [];
+      // this.questionTittle = "";
+      // this.numQuestionsMultiple = 2;
+      // this.numQuestionsUnique = 2;
     },
     titulo(i) {
       return "Seção " + (i + 1);
