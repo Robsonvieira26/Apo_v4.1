@@ -3,27 +3,16 @@
     <InputText
       type="text"
       placeholder="Titulo da pergunta"
-      v-model="questionTittle"
+      v-model="qTittle"
     ></InputText>
   </div>
-
-  <SelectButton
-    v-model="selectLikertChoice"
-    :options="scale"
-    optionLabel="name"
-    :disabled="true"
-  />
-
-  <!-- Button -->
-  <div class="p-2">
-    <h5>Questão Obrigatoria?</h5>
-    <InputSwitch inputId="switch1" v-model="qRequiered" />
-    <br />
-    <div class="pt-2 px-2">
-      <Button
-        label="Salvar pergunta?"
-        class="p-button-raised p-button-rounded"
-        @click="saveQuestion()"
+  <div class="formgrid grid px-2">
+    <div v-for="i in 5" :key="i" class="field col-6">
+      <label :for="labelsLikert[i - 1]">Alternativa {{ i }}</label>
+      <InputText
+        :id="labelsLikert[i - 1]"
+        type="text"
+        v-model="labelsLikert[i - 1]"
       />
     </div>
   </div>
@@ -31,20 +20,14 @@
 
 <script>
 export default {
-  name: "QLinkert",
+  name: "QLinkertCustom",
   emits: ["saveQuestion"],
   data() {
     return {
       qTittle: "",
       qRequiered: false,
-      selectLikertChoice: null,
+      labelsLikert: [],
     };
-  },
-  props: {
-    scale: {
-      type: Array,
-      requiered: true,
-    },
   },
   methods: {
     saveQuestion() {

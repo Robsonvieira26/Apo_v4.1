@@ -141,7 +141,6 @@
           />
         </div>
         <div v-if="selectedQuestionOption.name == 'Pessimo - Otimo'">
-          <!-- Escala Likert: Pessimo - Otimo -->
           <QLinkert
             @saveQuestion="saveQuestion($event)"
             :scale="selectLikert2Options"
@@ -150,31 +149,13 @@
         <div
           v-if="selectedQuestionOption.name == 'Muito Escuros - Bem Iluminados'"
         >
-          <!-- Escala Likert: Pouco Iluminado - Muito Iluminado -->
           <QLinkert
             @saveQuestion="saveQuestion($event)"
             :scale="selectLikert3Options"
           />
         </div>
         <div v-if="selectedQuestionOption.name == 'Personalizar...'">
-          <!-- Personalizar Escala Likert -->
-          <div class="field">
-            <InputText
-              type="text"
-              placeholder="Titulo da pergunta"
-              v-model="questionTittle"
-            ></InputText>
-          </div>
-          <div class="formgrid grid px-2">
-            <div v-for="i in 5" :key="i" class="field col-6">
-              <label :for="labelsLikert[i - 1]">Alternativa {{ i }}</label>
-              <InputText
-                :id="labelsLikert[i - 1]"
-                type="text"
-                v-model="labelsLikert[i - 1]"
-              />
-            </div>
-          </div>
+          <QLinkertCustom @saveQuestion="saveQuestion($event)" />
         </div>
         <div v-if="selectedQuestionOption.name == 'Multiplas Escalas Likert'">
           <!-- Escala Likert: 1-5 -->
@@ -270,6 +251,7 @@ import QMultiplecheckbox from "../components/crud-components/question-choices/QM
 import QUniquecheckbox from "../components/crud-components/question-choices/QUniquecheckbox.vue";
 import QText from "../components/crud-components/question-choices/QText.vue";
 import QLinkert from "../components/crud-components/question-choices/QLinkert.vue";
+import QLinkertCustom from "../components/crud-components/question-choices/QLinkertCustom.vue";
 
 export default {
   name: "CRUDevaluation",
@@ -279,13 +261,14 @@ export default {
     QUniquecheckbox,
     QText,
     QLinkert,
+    QLinkertCustom,
   },
   data() {
     return {
       tittle: "",
       labels: [],
       numQuestions: 2,
-
+      selectedQuestionOption: null,
       editTittleVisible: false,
       evaluationTittle: "Titulo Padrão",
       evaluationService: null,
@@ -301,15 +284,7 @@ export default {
         },
       ],
       createEditVisible: false,
-      numQuestionsMultiple: 2,
-      numQuestionsUnique: 2,
-      numQuestionsLikert: 2,
-      selectedQuestionOption: null,
-      requieredQuestion: false,
-      labelsLikert: [],
-      labelsMultiple: [],
-      labelsUnique: [],
-      questionTittle: "",
+
       cascadeOptions: [
         { name: "Multipla Escolha", value: 0 },
         { name: "Escolha Unica", value: 1 },
@@ -408,17 +383,6 @@ export default {
 
     clearInputs() {
       this.question = [];
-
-      // this.selectedQuestionOption = null;
-      // this.requieredQuestion = false;
-      // this.labels = [];
-      // this.selectLikertChoice = null;
-      // this.labelsLikert = [];
-      // this.labelsMultiple = [];
-      // this.labelsUnique = [];
-      // this.questionTittle = "";
-      // this.numQuestionsMultiple = 2;
-      // this.numQuestionsUnique = 2;
     },
     titulo(i) {
       return "Seção " + (i + 1);
