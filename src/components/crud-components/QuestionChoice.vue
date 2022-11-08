@@ -13,7 +13,7 @@
       <Likert :values="qValues" :type="qType" />
     </div>
     <div v-if="qType == 'Table'">
-      <TableQuestion />
+      <TableQuestion :values="qValues" />
     </div>
   </div>
 </template>

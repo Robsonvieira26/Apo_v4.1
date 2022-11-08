@@ -158,8 +158,9 @@
           <QLinkertCustom @saveQuestion="saveQuestion($event)" />
         </div>
         <div v-if="selectedQuestionOption.name == 'Multiplas Escalas Likert'">
+          <QMultipleLinkertVue @saveQuestion="saveQuestion($event)" />
           <!-- Escala Likert: 1-5 -->
-          <div class="formgrid grid px-2">
+          <!-- <div class="formgrid grid px-2">
             <div class="field col-8">
               <InputText
                 type="text"
@@ -203,10 +204,10 @@
                 </div>
               </div>
               ESCALA VEM AQUI
-              <Divider></Divider>
+              <Divider></Divider> 
             </div>
 
-            <!-- <div v-for="i in numQuestionsLikert" :key="i">
+            <div v-for="i in numQuestionsLikert" :key="i">
               <div class="field col">
                 <InputText
                   :id="labelsMultiple[i - 1]"
@@ -223,8 +224,8 @@
                   placeholder="Selecione o tipo de escala"
                 />
               </div>
-            </div> -->
-          </div>
+            </div>
+          </div> -->
         </div>
 
         <!-- FIM Escala Likert -->
@@ -252,7 +253,7 @@ import QUniquecheckbox from "../components/crud-components/question-choices/QUni
 import QText from "../components/crud-components/question-choices/QText.vue";
 import QLinkert from "../components/crud-components/question-choices/QLinkert.vue";
 import QLinkertCustom from "../components/crud-components/question-choices/QLinkertCustom.vue";
-
+import QMultipleLinkertVue from "../components/crud-components/question-choices/QMultipleLinkert.vue";
 export default {
   name: "CRUDevaluation",
   components: {
@@ -262,6 +263,7 @@ export default {
     QText,
     QLinkert,
     QLinkertCustom,
+    QMultipleLinkertVue,
   },
   data() {
     return {

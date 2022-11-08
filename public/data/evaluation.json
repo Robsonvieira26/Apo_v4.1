@@ -1,5 +1,16 @@
 {
-	"data": [
-    
-	]
+  "data": [
+    {
+      "id": "1000",
+      "tittle": "Table Example",
+      "type": "Table",
+      "requiered": true,
+      "values": [
+        { "name": "Subtitulo1", "scale": "1-5" },
+        { "name": "Subtitulo2", "scale": "1-5" },
+        { "name": "Subtitulo3", "scale": "1-5" },
+        { "name": "Subtitulo4", "scale": "1-5" }
+      ]
+    }
+  ]
 }
