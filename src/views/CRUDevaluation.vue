@@ -374,10 +374,18 @@ export default {
           values: [],
         },
       ];
-      for (let i in event.question["values"]) {
-        this.question[0].values.push({ name: event.question["values"][i] });
+      console.log(event.question["type"]);
+      if (event.question["type"] == "Table") {
+        // console.log(event.question);
+        for (let i in event.question["values"]) {
+          this.question[0].values.push(event.question["values"][i]);
+        }
+        // console.log(this.question[0].values);
+      } else {
+        for (let i in event.question["values"]) {
+          this.question[0].values.push({ name: event.question["values"][i] });
+        }
       }
-
       this.questions.push(this.question[0]);
       // console.log(this.questions);
       this.hideDialog();

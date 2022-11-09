@@ -27,19 +27,28 @@ export default {
       qTittle: "",
       qRequiered: false,
       labelsLikert: [],
+      dataSend: [],
     };
   },
   methods: {
     saveQuestion() {
+      this.formatData();
       console.log("salvando pergunta");
-      // this.$emit("saveQuestion", {
-      //   question: {
-      //     tittle: this.qTittle,
-      //     type: "Linkert",
-      //     values: this.qLabels,
-      //     requiered: this.qRequiered,
-      //   },
-      // });
+      this.$emit("saveQuestion", {
+        question: {
+          tittle: this.qTittle,
+          type: "Linkert",
+          values: this.dataSend,
+          requiered: this.qRequiered,
+        },
+      });
+    },
+    formatData() {
+      for (let i = 0; i < 5; i++) {
+        this.dataSend.push({
+          name: this.labelsLikert[i],
+        });
+      }
     },
   },
 };

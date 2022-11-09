@@ -156,7 +156,7 @@ export default {
         question: {
           tittle: this.qTittle,
           type: "Table",
-          labels: this.dataSend,
+          values: this.dataSend,
           requiered: this.qRequiered,
         },
       });
@@ -166,10 +166,13 @@ export default {
         // console.log(this.qLabels[i]);
         // console.log(this.selectedScale[i]);
         this.dataSend[i] = {
-        name: this.qLabels[i],
-        scale: this.selectedScale[i],
-        }
+          name: this.qLabels[i],
+          scale: this.selectedScale[i].name,
+        };
       }
+      console.log("Data Send");
+      console.log(this.dataSend);
+      console.log("----");
     },
   },
 };
