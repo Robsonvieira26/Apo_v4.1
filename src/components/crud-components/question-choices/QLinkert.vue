@@ -1,18 +1,25 @@
 <template>
-  <div class="field">
-    <InputText
-      type="text"
-      placeholder="Titulo da pergunta"
-      v-model="questionTittle"
-    ></InputText>
-  </div>
+  <div class="px-2">
+    <div class="field">
+      <InputText
+        type="text"
+        placeholder="Titulo da pergunta"
+        v-model.trim="qTittle"
+        required="true"
+        :class="{ 'p-invalid': submitted && !qTittle }"
+      ></InputText>
+      <small class="p-invalid" v-if="submitted && !qTittle"
+        >O titulo é obrigatorio
+      </small>
+    </div>
 
-  <SelectButton
-    v-model="selectLikertChoice"
-    :options="scale"
-    optionLabel="name"
-    :disabled="true"
-  />
+    <SelectButton
+      v-model="selectLikertChoice"
+      :options="scale"
+      optionLabel="name"
+      :disabled="true"
+    />
+  </div>
 
   <!-- Button -->
   <div class="p-2">
@@ -38,6 +45,7 @@ export default {
       qTittle: "",
       qRequiered: false,
       selectLikertChoice: null,
+      submitted: false,
     };
   },
   props: {
@@ -48,15 +56,19 @@ export default {
   },
   methods: {
     saveQuestion() {
-      console.log("salvando pergunta");
-      // this.$emit("saveQuestion", {
-      //   question: {
-      //     tittle: this.qTittle,
-      //     type: "Linkert",
-      //     values: this.qLabels,
-      //     requiered: this.qRequiered,
-      //   },
-      // });
+      this.submitted = true;
+
+      // console.log("salvando pergunta");
+      if (this.qTittle.trim()) {
+        this.$emit("saveQuestion", {
+          question: {
+            tittle: this.qTittle,
+            type: "Linkert",
+            values: this.qLabels,
+            requiered: this.qRequiered,
+          },
+        });
+      }
     },
   },
 };

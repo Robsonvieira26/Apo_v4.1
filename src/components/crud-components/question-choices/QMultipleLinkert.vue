@@ -4,8 +4,13 @@
       <InputText
         type="text"
         placeholder="Titulo da pergunta"
-        v-model="qTittle"
+        v-model.trim="qTittle"
+        required="true"
+        :class="{ 'p-invalid': submitted && !qTittle }"
       ></InputText>
+      <small class="p-invalid" v-if="submitted && !qTittle"
+        >O titulo é obrigatorio
+      </small>
     </div>
     <div class="field col-4">
       <InputNumber
@@ -31,9 +36,14 @@
           <InputText
             id="qLabels[i - 1]"
             type="text"
-            v-model="qLabels[i - 1]"
+            v-model.trim="qLabels[i - 1]"
             placeholder="Subtitulo"
+            required="true"
+            :class="{ 'p-invalid': submitted && !qLabels[i - 1] }"
           />
+          <small class="p-invalid" v-if="submitted && !qLabels[i - 1]"
+            >O subtitulo é obrigatorio
+          </small>
         </div>
         <div class="field col-6">
           <label for="escolha[i-1]">Escala Escolhida</label>
@@ -74,8 +84,13 @@
               <InputText
                 :id="labelsLikert[i - 1]"
                 type="text"
-                v-model="labelsLikert[i - 1]"
+                v-model.trim="labelsLikert[i - 1]"
+                required="true"
+                :class="{ 'p-invalid': submitted && !labelsLikert[i - 1] }"
               />
+              <small class="p-invalid" v-if="submitted && !labelsLikert[i - 1]"
+                >A alternativa deve ser informada
+              </small>
             </div>
           </div>
         </div>
@@ -114,6 +129,7 @@ export default {
       qRequiered: false,
       selectedScale: [],
       labelsLikert: [],
+      submitted: false,
       options: [
         { name: "1-5", value: 0 },
         { name: "Pessimo - Otimo", value: 1 },
@@ -150,16 +166,23 @@ export default {
   },
   methods: {
     saveQuestion() {
+      this.submitted = true;
       this.formatData();
       console.log("salvando pergunta");
-      this.$emit("saveQuestion", {
-        question: {
-          tittle: this.qTittle,
-          type: "Table",
-          values: this.dataSend,
-          requiered: this.qRequiered,
-        },
-      });
+      if (
+        this.qTittle.trim()
+        //&& this.qLabels.length > 0 &&
+        // this.selectedScale.length > 0
+      ) {
+        this.$emit("saveQuestion", {
+          question: {
+            tittle: this.qTittle,
+            type: "Table",
+            values: this.dataSend,
+            requiered: this.qRequiered,
+          },
+        });
+      }
     },
     formatData() {
       for (let i = 0; i < this.qNumQuestions; i++) {

@@ -1,10 +1,15 @@
 <template>
-  <div class="field">
+  <div class="field px-2">
     <InputText
       type="text"
       placeholder="Titulo da pergunta"
-      v-model="qTittle"
+      v-model.trim="qTittle"
+      required="true"
+      :class="{ 'p-invalid': submitted && !qTittle }"
     ></InputText>
+    <small class="p-invalid" v-if="submitted && !qTittle"
+      >O titulo é obrigatorio
+    </small>
   </div>
   <!-- Button -->
   <div class="p-2">
@@ -29,19 +34,23 @@ export default {
       qTittle: "",
       qRequiered: false,
       qLabels: { 0: "Texto" },
+      submitted: false,
     };
   },
   methods: {
     saveQuestion() {
+      this.submitted = true;
       // console.log("salvando pergunta");
-      this.$emit("saveQuestion", {
-        question: {
-          tittle: this.qTittle,
-          type: "Text",
-          values: this.qLabels,
-          requiered: this.qRequiered,
-        },
-      });
+      if (this.qTittle.trim()) {
+        this.$emit("saveQuestion", {
+          question: {
+            tittle: this.qTittle,
+            type: "Text",
+            values: this.qLabels,
+            requiered: this.qRequiered,
+          },
+        });
+      }
     },
   },
 };
