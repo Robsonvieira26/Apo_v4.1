@@ -2,14 +2,15 @@
   "data": [
     {
       "id": "1000",
-      "tittle": "Table Example",
-      "type": "Table",
+      "tittle": "Linkert Example",
+      "type": "Linkert",
       "requiered": true,
       "values": [
-        { "name": "Subtitulo1", "scale": "1-5" },
-        { "name": "Subtitulo2", "scale": "1-5" },
-        { "name": "Subtitulo3", "scale": "1-5" },
-        { "name": "Subtitulo4", "scale": "1-5" }
+        { "name": "1" },
+        { "name": "2" },
+        { "name": "3" },
+        { "name": "4" },
+        { "name": "5" }
       ]
     }
   ]

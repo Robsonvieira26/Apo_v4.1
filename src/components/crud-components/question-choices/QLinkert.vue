@@ -12,7 +12,6 @@
         >O titulo é obrigatorio
       </small>
     </div>
-
     <SelectButton
       v-model="selectLikertChoice"
       :options="scale"
@@ -42,6 +41,8 @@ export default {
   emits: ["saveQuestion"],
   data() {
     return {
+      service: null,
+      scaleTypes: null,
       qTittle: "",
       qRequiered: false,
       selectLikertChoice: null,
@@ -58,13 +59,14 @@ export default {
     saveQuestion() {
       this.submitted = true;
 
-      // console.log("salvando pergunta");
+      console.log(this.scale);
+      //json com escalas
       if (this.qTittle.trim()) {
         this.$emit("saveQuestion", {
           question: {
             tittle: this.qTittle,
             type: "Linkert",
-            values: this.qLabels,
+            values: this.scale,
             requiered: this.qRequiered,
           },
         });

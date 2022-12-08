@@ -73,7 +73,7 @@ export default {
     saveQuestion() {
       this.submitted = true;
       // console.log("salvando pergunta");
-      if (this.qTittle.trim() && this.qLabels.length > 2) {
+      if (this.qTittle.trim() && this.qLabels.length >= 2) {
         this.$emit("saveQuestion", {
           question: {
             tittle: this.qTittle,

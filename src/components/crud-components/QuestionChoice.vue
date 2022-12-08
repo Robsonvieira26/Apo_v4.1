@@ -1,5 +1,5 @@
 <template>
-  <div>
+<div>
     <div v-if="qType == 'Multiplecheckbox'">
       <Multiplecheckbox :values="qValues" :type="qType" />
     </div>
@@ -9,7 +9,7 @@
     <div v-if="qType == 'Text'">
       <TextQuestion :values="qValues" :type="qType" />
     </div>
-    <div v-if="qType == 'Likert'">
+    <div v-if="qType == 'Linkert'">
       <Likert :values="qValues" :type="qType" />
     </div>
     <div v-if="qType == 'Table'">

@@ -1,5 +1,5 @@
 {
-	"data": [
+  "data": [
     {
       "id": "1000",
       "tittle": "Table Example",
@@ -11,13 +11,12 @@
         { "name": "3" },
         { "name": "4" },
         { "name": "5" }
-        
       ]
     },
     {
       "id": "1000",
-      "tittle": "Likert Example",
-      "type": "Likert",
+      "tittle": "Linkert Example",
+      "type": "Linkert",
       "requiered": true,
       "values": [
         { "name": "1" },
@@ -25,7 +24,6 @@
         { "name": "3" },
         { "name": "4" },
         { "name": "5" }
-        
       ]
     },
     {
@@ -33,36 +31,33 @@
       "tittle": "Text Example",
       "type": "Text",
       "requiered": true,
+      "values": [{ "name": "Texto" }]
+    },
+    {
+      "id": "0001",
+      "tittle": "Multiplecheckbox Example",
+      "type": "Multiplecheckbox",
+      "requiered": true,
       "values": [
-        { "name": "Texto" }
+        { "name": "Opcao teste" },
+        { "name": "Opcao teste" },
+        { "name": "Opcao teste" },
+        { "name": "Opcao teste" },
+        { "name": "Opcao teste" }
       ]
     },
-	{
-		"id": "0001",
-    "tittle": "Multiplecheckbox Example",
-    "type": "Multiplecheckbox",
-    "requiered": true,
-    "values": [
-      { "name": "Opcao teste" },
-      { "name": "Opcao teste" },
-      { "name": "Opcao teste" },
-      { "name": "Opcao teste" },
-      { "name": "Opcao teste" }
-    ]
-  }
-  ,
-  {
-		"id": "0002",
-    "tittle": "Uniquecheckbox example",
-    "type": "Uniquecheckbox",
-    "requiered": true,
-    "values": [
-      { "name": "Opcao teste2-1" },
-      { "name": "Opcao teste2-2" },
-      { "name": "Opcao teste2-3" },
-      { "name": "Opcao teste2-4" },
-      { "name": "Opcao teste2-5" }
-    ]
-  }
-	]
+    {
+      "id": "0002",
+      "tittle": "Uniquecheckbox example",
+      "type": "Uniquecheckbox",
+      "requiered": true,
+      "values": [
+        { "name": "Opcao teste2-1" },
+        { "name": "Opcao teste2-2" },
+        { "name": "Opcao teste2-3" },
+        { "name": "Opcao teste2-4" },
+        { "name": "Opcao teste2-5" }
+      ]
+    }
+  ]
 }
