@@ -68,14 +68,14 @@
           class="p-button-raised p-button-outlined p-button-lg"
           v-on:click="addCategory()"
         />
+        <!-- {{ activeIndex }} -->
       </div>
     </div>
     <!-- Botões -->
   </div>
   <div class="card">
-    <TabView
-      ><!--:activeIndex="activeIndex"-->
-      <TabPanel header="Seção 1">
+    <TabView v-model:activeIndex="activeIndex">
+      <TabPanel v-for="i in numberSections" :key="i" :header="titulo(i)">
         <!-- <div class="card"> -->
 
         <div v-if="questions == null || questions == []">
@@ -94,9 +94,6 @@
         </div>
         <!-- </div> -->
       </TabPanel>
-      <!-- <TabPanel v-for="i in 5" :key="i" :header="titulo(i)">
-        Categoria {{ i + 1 }}
-      </TabPanel> -->
     </TabView>
   </div>
 
@@ -108,6 +105,7 @@
     class="p-fluid"
   >
     <ScrollPanel style="width: 100%; height: 250px" class="custombar1">
+      <!-- {{ linkertServiceLabels }} -->
       <div class="field col-8">
         <label for="multiselect">Selecione o Tipo de Pergunta</label>
         <span class="p-float-label">
@@ -246,8 +244,10 @@
   </Dialog>
 </template>
 <script>
-import QuestionCard from "@/components/crud-components/QuestionCard.vue";
 import EvaluationService from "../service/EvaluationService";
+import LinkertService from "../service/LinkertService";
+
+import QuestionCard from "@/components/crud-components/QuestionCard.vue";
 import QMultiplecheckbox from "../components/crud-components/question-choices/QMultiplecheckbox.vue";
 import QUniquecheckbox from "../components/crud-components/question-choices/QUniquecheckbox.vue";
 import QText from "../components/crud-components/question-choices/QText.vue";
@@ -267,8 +267,12 @@ export default {
   },
   data() {
     return {
+      activeIndex: 0,
+      LinkertService: null,
+      linkertServiceLabels: null,
       tittle: "",
       labels: [],
+      numberSections: 1,
       numQuestions: 2,
       selectedQuestionOption: null,
       editTittleVisible: false,
@@ -332,18 +336,30 @@ export default {
   },
   created() {
     this.evaluationService = new EvaluationService();
+    this.linkertService = new LinkertService();
   },
   mounted() {
     this.evaluationService
       .getQuestions()
       .then((data) => (this.questions = data));
-    if (this.questions == null) {
-      console.log("Nulo");
-    } else {
-      console.log("Não nulo");
-      // console.log(this.questions.lenght);
-      //   // console.log(this.questions.length);
-    }
+    this.linkertService
+      .getTypes()
+      .then((data) => (this.linkertServiceLabels = data));
+    // for (let i in this.linkertServiceLabels) {
+    //   this.cascadeOptions[3].types.push({
+    //     name: this.linkertServiceLabels[i].name,
+    //     value: this.linkertServiceLabels[i].id,
+    //   });
+    //   console.log(this.linkertServiceLabels);
+    // }
+    // console.log(this.linkertServiceLabels);
+    // if (this.questions == null) {
+    //   console.log("Nulo");
+    // } else {
+    //   console.log("Não nulo");
+    // console.log(this.questions.lenght);
+    //   // console.log(this.questions.length);
+    // }
   },
   methods: {
     showEditTitle() {
@@ -353,7 +369,8 @@ export default {
       this.editTittleVisible = false;
     },
     addCategory() {
-      console.log(this.questions[0]);
+      this.activeIndex++;
+      this.numberSections++;
     },
     hideDialog() {
       this.createEditVisible = false;
@@ -361,9 +378,11 @@ export default {
     },
     showDialog() {
       this.createEditVisible = true;
+      console.log(Object.keys(this.linkertServiceLabels.escalas));
       // console.log("Clicou");
     },
     saveQuestion(event) {
+      console.log(event);
       this.question = [
         {
           //TODO: Gerar ID
@@ -374,13 +393,17 @@ export default {
           values: [],
         },
       ];
-      console.log(event.question["type"]);
+      // console.log(event.question["type"]);
       if (event.question["type"] == "Table") {
         // console.log(event.question);
         for (let i in event.question["values"]) {
           this.question[0].values.push(event.question["values"][i]);
         }
         // console.log(this.question[0].values);
+      } else if (event.question["type"] == "Linkert") {
+        for (let i in event.question["values"]) {
+          this.question[0].values.push(event.question["values"][i]);
+        }
       } else {
         for (let i in event.question["values"]) {
           this.question[0].values.push({ name: event.question["values"][i] });
@@ -395,7 +418,7 @@ export default {
       this.question = [];
     },
     titulo(i) {
-      return "Seção " + (i + 1);
+      return "Seção " + i;
     },
   },
 };

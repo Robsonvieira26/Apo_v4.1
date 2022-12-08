@@ -2,7 +2,33 @@
   "data": [
     {
       "id": "1000",
-      "tittle": "Linkert Example",
+      "tittle": "Linkert Example 1",
+      "type": "Linkert",
+      "requiered": true,
+      "values": [
+        { "name": "1" },
+        { "name": "2" },
+        { "name": "3" },
+        { "name": "4" },
+        { "name": "5" }
+      ]
+    },
+    {
+      "id": "1000",
+      "tittle": "Linkert Example 2",
+      "type": "Linkert",
+      "requiered": true,
+      "values": [
+        { "name": "1" },
+        { "name": "2" },
+        { "name": "3" },
+        { "name": "4" },
+        { "name": "5" }
+      ]
+    },
+    {
+      "id": "1000",
+      "tittle": "Linkert Example 3",
       "type": "Linkert",
       "requiered": true,
       "values": [

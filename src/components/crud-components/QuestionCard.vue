@@ -63,7 +63,6 @@
             label="Editar"
             icon="pi pi-pencil"
             class="p-button-text"
-            v-on:click="editarPergunta()"
             :model="items"
           ></SplitButton>
         </div>
@@ -273,14 +272,14 @@ export default {
           label: "Ver Respostas",
           icon: "pi pi-chart-bar",
           command: () => {
-            this.editarPergunta();
+            this.verRespostas();
           },
         },
       ],
     };
   },
   methods: {
-    editarPergunta() {
+    verRespostas() {
       this.seeAnswers = true;
       console.log("Editar");
     },
