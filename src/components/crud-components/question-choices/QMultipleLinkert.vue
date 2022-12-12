@@ -134,7 +134,7 @@ export default {
         { name: "1-5", value: 0 },
         { name: "Pessimo - Otimo", value: 1 },
         { name: "Muito Escuros - Bem Iluminados", value: 2 },
-        { name: "Personalizar...", value: 3 },
+        // { name: "Personalizar...", value: 3 },
       ],
       linkertOptions: [
         [
@@ -168,12 +168,13 @@ export default {
     saveQuestion() {
       this.submitted = true;
       this.formatData();
-      console.log("salvando pergunta");
+      // console.log("salvando pergunta");
       if (
         this.qTittle.trim()
         //&& this.qLabels.length > 0 &&
         // this.selectedScale.length > 0
       ) {
+        console.log("salvando pergunta");
         this.$emit("saveQuestion", {
           question: {
             tittle: this.qTittle,
@@ -185,6 +186,14 @@ export default {
       }
     },
     formatData() {
+      // const obj = {
+      //   name: this.qLabels[0],
+      //   scale: [this.selectedScale[0].name],
+      // }
+      // this.dataSend.push(this.qLabels[0])
+      // this.dataSend.push(this.qLabels[0])
+      // this.dataSend.push(this.qLabels[0])
+
       for (let i = 0; i < this.qNumQuestions; i++) {
         // console.log(this.qLabels[i]);
         // console.log(this.selectedScale[i]);
@@ -193,9 +202,9 @@ export default {
           scale: this.selectedScale[i].name,
         };
       }
-      console.log("Data Send");
-      console.log(this.dataSend);
-      console.log("----");
+      // console.log("Data Send");
+      // console.log(this.dataSend);
+      // console.log("----");
     },
   },
 };
