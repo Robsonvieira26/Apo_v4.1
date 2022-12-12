@@ -1,0 +1,35 @@
+{
+  "data": [
+    {
+      "escalas": {
+        "1-5": {
+          "options": [
+            { "name": "1", "value": "1" },
+            { "name": "2", "value": "2" },
+            { "name": "3", "value": "3" },
+            { "name": "4", "value": "4" },
+            { "name": "5", "value": "5" }
+          ]
+        },
+        "Pessimo - Otimo": {
+          "options": [
+            { "name": "Pessimo", "value": "1" },
+            { "name": "Ruim", "value": "2" },
+            { "name": "Regular", "value": "3" },
+            { "name": "Bom", "value": "4" },
+            { "name": "Otimo", "value": "5" }
+          ]
+        },
+        "Muito Escuros - Bem Iluminados": {
+          "options": [
+            { "name": "Muito Escuros", "value": "1" },
+            { "name": "Escuros", "value": "2" },
+            { "name": "Regular", "value": "3" },
+            { "name": "Bem Iluminados", "value": "4" },
+            { "name": "Muito Iluminados", "value": "5" }
+          ]
+        }
+      }
+    }
+  ]
+}
