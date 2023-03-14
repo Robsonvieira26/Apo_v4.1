@@ -178,7 +178,9 @@ const initFilters = () => {
 
                     <Column headerStyle="min-width:10rem;">
                         <template #body="slotProps">
-                            <Button v-tooltip.top="'Editar Perguntas do Questionario'" icon="pi pi-sliders-h" class="p-button-rounded p-button-success mr-2 mt-2" @click="editProduct(slotProps.data)" />
+                            <router-link to="/CRUD">
+                                <Button v-tooltip.top="'Editar Perguntas do Questionario'" icon="pi pi-sliders-h" class="p-button-rounded p-button-success mr-2 mt-2" />
+                            </router-link>
                             <Button v-tooltip.top="'Editar informações do Questionario'" icon="pi pi-pencil" class="p-button-rounded p-button-secondary mr-2 mt-2" @click="editProduct(slotProps.data)" />
                             <Button v-tooltip.top="'Visualizar'" icon="pi pi-search" class="p-button-rounded p-button-primar mr-2 mt-2" @click="editProduct(slotProps.data)" />
                             <Button v-tooltip.top="'Responder'" icon="pi pi-reply" class="p-button-rounded p-button-help mr-2 mt-2" @click="confirmDeleteProduct(slotProps.data)" />
