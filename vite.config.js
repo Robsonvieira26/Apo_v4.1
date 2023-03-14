@@ -4,7 +4,8 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command }) => {
+// eslint-disable-next-line no-empty-pattern
+export default defineConfig(({}) => {
     return {
         plugins: [vue()],
         base: '',
