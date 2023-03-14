@@ -1,54 +1,40 @@
-<h1 align="center">Sistema Apo Digital</h1>
+# sakai-vue
 
+This template should help get you started developing with Vue 3 in Vite.
 
+## Recommended IDE Setup
 
-##  Setup do Projeto
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-<p>Antes de Usar, instale todas as dependencias do app com o comando:</p>
+## Customize configuration
 
-Usando npm :
+See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-```
+## Project Setup
+
+```sh
 npm install
 ```
 
-Usando yarn :
+### Compile and Hot-Reload for Development
 
-```
-yarn install
-```
-
-### Compilando e usando o Hot-Reload para desenvolvimento
-
-<p>Execute este comando para compilar:</p>
-
-Usando npm :
-
-```
-npm run serve
+```sh
+npm run dev
 ```
 
-Usando yarn :
+### Compile and Minify for Production
 
-```
-yarn serve
-```
-
-###  Compilando e minificando para Produção for production
-
-<p>Build o app para produção com os seguinte comando :</p>
-
-Usando npm :
-
-```
+```sh
 npm run build
 ```
 
-Usando yarn :
+### Lint with [ESLint](https://eslint.org/)
 
+```sh
+npm run lint
 ```
-yarn build
-```
+
+
 
 # Padrão de Comentarios
 Para manter uma maior padronização os commits devem ser realizados seguindo o seguinte padrão `“TIPO:<Pagina(s) editadas>: Descrição”`. Os tipos utilizados serão os mencionados abaixo:
