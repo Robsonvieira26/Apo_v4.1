@@ -18,10 +18,14 @@ const router = createRouter({
                     name: 'CRUD',
                     params: true,
                     component: () => import('@/views/pages/evaluation/CRUDevaluation.vue')
+                },
+                {
+                    path: '/atividade',
+                    name: 'atividade',
+                    component: () => import('@/views/pages/Annelise.vue')
                 }
             ]
         },
-
         {
             path: '/auth/login',
             name: 'login',
