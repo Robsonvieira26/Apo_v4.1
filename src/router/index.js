@@ -22,7 +22,7 @@ const router = createRouter({
                 {
                     path: '/atividade',
                     name: 'atividade',
-                    component: () => import('@/views/pages/Annelise.vue')
+                    component: () => import('@/views/pages/Gustavo.vue')
                 }
             ]
         },
